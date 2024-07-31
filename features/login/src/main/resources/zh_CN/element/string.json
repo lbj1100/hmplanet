@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "wx_login",
+      "value": "微信登录"
+    },
+    {
+      "name": "hm_planet_title",
+      "value": "鸿蒙星球"
+    },
+    {
+      "name": "hm_planet_intro",
+      "value": "知识社区"
+    },
+    {
+      "name": "account_login",
+      "value": "账号登录"
+    },
+    {
+      "name": "agree",
+      "value": "已阅读并同意《用户协议》和《隐私声明》如需快速了解信息收集情况，可参考《隐私政策摘要》"
+    }
+  ]
+}

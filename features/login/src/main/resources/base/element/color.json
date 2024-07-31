@@ -1,0 +1,20 @@
+{
+  "color": [
+    {
+      "name": "login_button_color",
+      "value": "#18b896"
+    },
+    {
+      "name": "font_color_grey",
+      "value": "#b6b8b9"
+    },
+    {
+      "name": "popup_color",
+      "value": "#04cea2"
+    },
+    {
+      "name": "wx_login_bgcolor",
+      "value": "#efefef"
+    }
+  ]
+}

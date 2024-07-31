@@ -1,0 +1,60 @@
+{
+  "color": [
+    {
+      "name": "gray",
+      "value": "#f5f5f5"
+    },
+    {
+      "name": "card_bg_color",
+      "value": "#f5f6f8"
+    },
+    {
+      "name": "author_color",
+      "value": "#666666"
+    },
+    {
+      "name": "card_title_color",
+      "value": "#1f1f1f"
+    },
+    {
+      "name": "new_planet_bg_color",
+      "value": "#f4fdfc"
+    },
+    {
+      "name": "new_planet_font_color",
+      "value": "#8fa19f"
+    },
+    {
+      "name": "new_planet_query_font_color",
+      "value": "#d68a71"
+    },
+    {
+      "name": "new_planet_query_bg_color",
+      "value": "#fff3f3"
+    },
+    {
+      "name": "rankings_bg",
+      "value": "#aaaaaa"
+    },
+    {
+      "name": "rankings_border",
+      "value": "#ccc"
+    },
+    {
+      "name": "recommended_bg",
+      "value": "#f5f6f8"
+    },
+    {
+      "name": "description_color",
+      "value": "#666666"
+    },
+    {
+      "name": "tag_font_color",
+      "value": "#888888"
+    },
+    {
+      "name": "tag_bg_color",
+      "value": "#6464ff4c"
+    }
+  ]
+}

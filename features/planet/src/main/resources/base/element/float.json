@@ -1,0 +1,128 @@
+{
+  "float": [
+    {
+      "name": "card_item_image_size",
+      "value": "132"
+    },
+    {
+      "name": "vp_sixteen",
+      "value": "16vp"
+    },
+    {
+      "name": "vp_eight",
+      "value": "8vp"
+    },
+    {
+      "name": "small_font_size",
+      "value": "12fp"
+    },
+    {
+      "name": "card_desc_height",
+      "value": "20vp"
+    },
+    {
+      "name": "middle_font_size",
+      "value": "16fp"
+    },
+    {
+      "name": "vp_four",
+      "value": "4vp"
+    },
+    {
+      "name": "micro_font_size",
+      "value": "10fp"
+    },
+    {
+      "name": "vp_twelve",
+      "value": "12vp"
+    },
+    {
+      "name": "card_item_height",
+      "value": "210vp"
+    },
+    {
+      "name": "vp_six",
+      "value": "6vp"
+    },
+    {
+      "name": "card_list_margin",
+      "value": "0vp"
+    },
+    {
+      "name": "empty_image_size",
+      "value": "60vp"
+    },
+    {
+      "name": "vp_ten",
+      "value": "10vp"
+    },
+    {
+      "name": "vp_twenty",
+      "value": "20"
+    },
+    {
+      "name": "img_height",
+      "value": "154vp"
+    },
+    {
+      "name": "card_list_bottom",
+      "value": "8vp"
+    },
+    {
+      "name": "new_planet_height",
+      "value": "100vp"
+    },
+    {
+      "name": "new_planet_image_size",
+      "value": "30vp"
+    },
+    {
+      "name": "new_planet_font_size",
+      "value": "12vp"
+    },
+    {
+      "name": "right_arrow_image_size",
+      "value": "20vp"
+    },
+    {
+      "name": "new_planet_query_height",
+      "value": "40vp"
+    },
+    {
+      "name": "rankings_height",
+      "value": "120vp"
+    },
+    {
+      "name": "rankings_img_size",
+      "value": "30vp"
+    },
+    {
+      "name": "vp_twentyfour",
+      "value": "24vp"
+    },
+    {
+      "name": "rankings_item_width",
+      "value": "105vp"
+    },
+    {
+      "name": "rankings_item_height",
+      "value": "80vp"
+    },
+    {
+      "name": "vp_one",
+      "value": "1vp"
+    },
+    {
+      "name": "vp_thirty",
+      "value": "30vp"
+    },
+    {
+      "name": "vp_fourteen",
+      "value": "14vp"
+    },
+    {
+      "name": "vp_forty",
+      "value": "40vp"
+    }
+  ]
+}

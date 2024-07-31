@@ -1,0 +1,24 @@
+{
+  "float": [
+    {
+      "name": "main_image_size",
+      "value": "24vp"
+    },
+    {
+      "name": "micro_font_size",
+      "value": "10vp"
+    },
+    {
+      "name": "bar_width",
+      "value": "96vp"
+    },
+    {
+      "name": "vp_fifty_six",
+      "value": "56vp"
+    },
+    {
+      "name": "divider_width",
+      "value": "1vp"
+    }
+  ]
+}

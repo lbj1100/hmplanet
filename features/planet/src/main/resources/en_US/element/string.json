@@ -1,0 +1,48 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "default_title",
+      "value": "Knowledge planet"
+    },
+    {
+      "name": "default_author",
+      "value": "planet author"
+    },
+    {
+      "name": "planet_title",
+      "value": "Knowledge planet"
+    },
+    {
+      "name": "new_planet_title",
+      "value": "Create an exclusive planet and build a quality community."
+    },
+    {
+      "name": "new_planet_query",
+      "value": "Create a community If you have questions, contact Knowledge Planet Official Operations"
+    },
+    {
+      "name": "rankings_title",
+      "value": "Planet Ranking"
+    },
+    {
+      "name": "rankings_subtitle",
+      "value": "· Updated every hour"
+    },
+    {
+      "name": "rankings_more",
+      "value": "More quality planets"
+    },
+    {
+      "name": "recommended_title",
+      "value": "You might be interested"
+    },
+    {
+      "name": "recommended_more",
+      "value": "See More"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "src": [
+    "pages/MainPage",
+    "pages/Test",
+    "pages/Test1",
+    "pages/Test2",
+    "pages/FirstPage"
+  ]
+}

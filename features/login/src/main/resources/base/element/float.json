@@ -1,0 +1,44 @@
+{
+  "float": [
+    {
+      "name": "button_width",
+      "value": "250vp"
+    },
+    {
+      "name": "button_height",
+      "value": "45vp"
+    },
+    {
+      "name": "image_planet_width",
+      "value": "100vp"
+    },
+    {
+      "name": "image_planet_height",
+      "value": "100vp"
+    },
+    {
+      "name": "title_margin_top",
+      "value": "150vp"
+    },
+    {
+      "name": "statement_margin_top",
+      "value": "20vp"
+    },
+    {
+      "name": "wx_login_margin_top",
+      "value": "330vp"
+    },
+    {
+      "name": "image_planet_small_width",
+      "value": "50vp"
+    },
+    {
+      "name": "image_planet_small_height",
+      "value": "50vp"
+    },
+    {
+      "name": "statement_width",
+      "value": "270vp"
+    }
+  ]
+}

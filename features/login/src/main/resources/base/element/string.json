@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "wx_login",
+      "value": "Wechat login"
+    },
+    {
+      "name": "hm_planet_title",
+      "value": "HarmonyPlanet"
+    },
+    {
+      "name": "hm_planet_intro",
+      "value": "Knowledge community"
+    },
+    {
+      "name": "account_login",
+      "value": "Account Login"
+    },
+    {
+      "name": "agree",
+      "value": "Read and agree to the User Agreement and Privacy Statement For a quick overview of information collection, please refer to the Privacy Policy Summary"
+    }
+  ]
+}

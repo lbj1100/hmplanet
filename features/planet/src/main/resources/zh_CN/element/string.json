@@ -1,0 +1,48 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "default_title",
+      "value": "知识星球"
+    },
+    {
+      "name": "default_author",
+      "value": "星球作者"
+    },
+    {
+      "name": "planet_title",
+      "value": "知识星球"
+    },
+    {
+      "name": "new_planet_title",
+      "value": "创立专属星球，建设优质社群"
+    },
+    {
+      "name": "new_planet_query",
+      "value": "创建社群有疑问，就找知识星球官方运营"
+    },
+    {
+      "name": "rankings_title",
+      "value": "星球榜单"
+    },
+    {
+      "name": "rankings_subtitle",
+      "value": "· 每小时更新"
+    },
+    {
+      "name": "rankings_more",
+      "value": "更多优质星球"
+    },
+    {
+      "name": "recommended_title",
+      "value": "你可能感兴趣"
+    },
+    {
+      "name": "recommended_more",
+      "value": "查看更多 "
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#000000"
+    },
+    {
+      "name": "page_background",
+      "value": "#202020"
+    },
+    {
+      "name": "focus_color",
+      "value": "#1aaba8"
+    }
+  ]
+}
