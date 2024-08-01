@@ -34,7 +34,7 @@
     },
     {
       "name": "rankings_bg",
-      "value": "#aaaaaa"
+      "value": "#4caaaaaa"
     },
     {
       "name": "rankings_border",
@@ -54,7 +54,7 @@
     },
     {
       "name": "tag_bg_color",
-      "value": "#6464ff4c"
+      "value": "#4c6464ff"
     }
   ]
 }

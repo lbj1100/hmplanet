@@ -46,7 +46,7 @@ export struct Recommended {
             Text(tag)
               .fontSize(12)
               .fontColor($r('app.color.tag_font_color'))
-              .backgroundColor('rgba(100, 100, 255, 0.3)')
+              .backgroundColor($r('app.color.tag_bg_color'))
               .padding({
                 left: $r('app.float.vp_eight'),
                 right: $r('app.float.vp_eight')
