@@ -8,7 +8,6 @@ import { RankingComponent } from '../components/RankingComponent'
 import { resourceManager } from '@kit.LocalizationKit'
 import { Recommended } from '../components/Recommended'
 import { router } from '@kit.ArkUI'
-import { SearchComponent } from '../components/SearchComponent'
 
 @Entry({ routeName: 'PlanetPage' })
 @Component

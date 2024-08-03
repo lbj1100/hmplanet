@@ -3,15 +3,26 @@ import { PlanetConstants } from '../constants/PlanetConstants'
 import { router } from '@kit.ArkUI'
 import { Planet } from '../viewmodel/PlanetModel'
 import { cardData } from '../viewmodel/CardData'
+import { PreferencesUtil } from '@ohos/datastore'
+import { BusinessError } from '@kit.BasicServicesKit'
 
 
 @Entry({ routeName: 'SearchPage' })
 @Component
 export struct SearchPage {
   @State rankings: Planet[] = []
+  // TODO 搜索历史Set
+  @State searchHistory: string[] = []
+  private preferencesUtil: PreferencesUtil = PreferencesUtil.getInstance()
+  private hasHistory: boolean = false
 
   aboutToAppear(): void {
     this.rankings = cardData
+    this.hasHistory = this.preferencesUtil.hasValueSync('searchHistory');
+    // 判断是否有搜索历史
+    if (this.hasHistory) {
+      this.searchHistory = this.preferencesUtil.getValueSync('searchHistory') as string[];
+    }
   }
 
   @Builder
@@ -31,9 +42,6 @@ export struct SearchPage {
             .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
             .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
         }
-        // Image($r('app.media.default_img'))
-        //   .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
-        //   .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
       } else {
         Text((index + 1).toString())
           .fontSize(16)
@@ -67,6 +75,25 @@ export struct SearchPage {
         Search()
           .width('70%')
           .borderRadius(8)
+          .onSubmit((value: string) => {
+            // 提交事件
+            console.info('submit', value)
+            // 保存搜索历史
+            if (this.searchHistory.includes(value)) {
+              this.searchHistory.splice(this.searchHistory.indexOf(value), 1)
+            }
+            // 从头插入
+            this.searchHistory.unshift(value)
+            // this.searchHistory.push(value)
+            if (this.searchHistory.length > 10) {
+              this.searchHistory.shift()
+            }
+            this.preferencesUtil.setValue('searchHistory', this.searchHistory).then(() => {
+              console.info('save search history success')
+            }).catch((err: BusinessError) => {
+              console.error('save search history failed', err)
+            })
+          })
         // 取消
         Text($r('app.string.search_cancel'))
           .fontSize(14)
@@ -79,8 +106,8 @@ export struct SearchPage {
       .width(StyleConstants.FULL_WIDTH)
       .justifyContent(FlexAlign.Center)
 
-      // TODO 搜索历史保存在preferences中
-      if (true) {
+      // 搜索历史保存在preferences中
+      if (this.searchHistory.length > 0) {
         // 最近搜索
         Column() {
           Row() {
@@ -94,6 +121,13 @@ export struct SearchPage {
               .onClick(() => {
                 // 点击事件
                 console.info('click clear')
+                // 清空搜索历史
+                this.searchHistory = []
+                this.preferencesUtil.deleteValue('searchHistory').then(() => {
+                  console.info('clear search history success')
+                }).catch((err: BusinessError) => {
+                  console.error('clear search history failed', err)
+                })
               })
           }
           .width(StyleConstants.FULL_WIDTH)
@@ -103,6 +137,41 @@ export struct SearchPage {
             top: $r('app.float.vp_twelve'),
             bottom: $r('app.float.vp_twelve')
           })
+          // 展示搜索历史
+          ForEach(this.searchHistory, (item: string, index: number) => {
+            Row() {
+              Text(item)
+                .fontSize(14)
+                // .fontColor($r('app.color.search_history_font_color'))
+                .onClick(() => {
+                  // 点击事件
+                  console.info('click search history', item)
+                })
+              // 删除
+              Image($r('app.media.ic_clear'))
+                .width(14)
+                .height(14)
+                .onClick(() => {
+                  // 点击事件
+                  console.info('click clear search history', item)
+                  // 删除搜索历史
+                  this.searchHistory.splice(index, 1)
+                  this.preferencesUtil.setValue('searchHistory', this.searchHistory).then(() => {
+                    console.info('delete search history success')
+                  }).catch((err: BusinessError) => {
+                    console.error('delete search history failed', err)
+                  })
+                })
+            }
+            .width(StyleConstants.FULL_WIDTH)
+            .alignItems(VerticalAlign.Center)
+            .justifyContent(FlexAlign.SpaceBetween)
+            .margin({
+              bottom: $r('app.float.vp_twelve')
+            })
+          })
+
+
           Blank()
             .height(6)
             .backgroundColor($r('app.color.divider_color'))
