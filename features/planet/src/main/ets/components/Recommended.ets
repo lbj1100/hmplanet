@@ -1,13 +1,13 @@
 import { StyleConstants } from '@ohos/common'
 import { PlanetConstants } from '../constants/PlanetConstants'
-import { Card } from '../viewmodel/CardModel'
+import { Planet } from '../viewmodel/PlanetModel'
 
 @Preview
 @Component
 export struct Recommended {
   @State isLoading: boolean = false
-  @Prop recommendedList: Card[] = []
-  @State recommended3Item: Card[] = []
+  @Prop recommendedList: Planet[] = []
+  @State recommended3Item: Planet[] = []
 
   aboutToAppear(): void {
     // recommendedList只取前三个
@@ -15,7 +15,7 @@ export struct Recommended {
   }
 
   @Builder
-  RecommendedItem(item: Card) {
+  RecommendedItem(item: Planet) {
     Column() {
       Row() {
         Image(item.images)
@@ -106,7 +106,7 @@ export struct Recommended {
       // 推荐列表
       Row() {
         List() {
-          ForEach(this.recommended3Item, (item: Card) => {
+          ForEach(this.recommended3Item, (item: Planet) => {
             ListItem() {
               this.RecommendedItem(item)
             }

@@ -1,4 +1,4 @@
-import { Card1 } from './CardModel'
+import { Card1 } from './PlanetModel'
 
 /**
  * Application simulation data can be obtained from the server by developers.

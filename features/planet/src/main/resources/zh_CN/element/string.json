@@ -43,6 +43,14 @@
     {
       "name": "recommended_more",
       "value": "查看更多 "
+    },
+    {
+      "name": "search_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "search_placeholder",
+      "value": "搜索星球、用户或内容"
     }
   ]
 }

@@ -10,19 +10,19 @@ export class Specification {
   data: KV[] = [];
 }
 
-export class Card1 {
-  category_id?: string = '';
-  id: string = '';
-  title: string = '';
-  promotion?: string = '';
-  description: string = '';
-  images: string[] | Resource = [];
-  detail?: string[] | Resource = [];
-  price: number = 0;
-  specifications?: Specification[] = [];
-}
+// export class Card1 {
+//   category_id?: string = '';
+//   id: string = '';
+//   title: string = '';
+//   promotion?: string = '';
+//   description: string = '';
+//   images: string[] | Resource = [];
+//   detail?: string[] | Resource = [];
+//   price: number = 0;
+//   specifications?: Specification[] = [];
+// }
 
-export class Card {
+export class Planet {
   // 分类ID
   category_id?: string = '0';
   // 星球ID

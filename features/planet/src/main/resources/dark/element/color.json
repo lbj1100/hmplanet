@@ -7,6 +7,10 @@
     {
       "name": "rankings_border",
       "value": "#333333"
+    },
+    {
+      "name": "divider_color",
+      "value": "#060606"
     }
   ]
 }

@@ -55,6 +55,14 @@
     {
       "name": "tag_bg_color",
       "value": "#4c6464ff"
+    },
+    {
+      "name": "search_cancel_font_color",
+      "value": "#666666"
+    },
+    {
+      "name": "divider_color",
+      "value": "#f6f6f6"
     }
   ]
 }

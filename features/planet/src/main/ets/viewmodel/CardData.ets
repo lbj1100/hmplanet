@@ -1,6 +1,6 @@
-import { Card } from './CardModel'
+import { Planet } from './PlanetModel'
 
-const cardData: Card[] = [
+const cardData: Planet[] = [
   {
     category_id: "1",
     id: "1",

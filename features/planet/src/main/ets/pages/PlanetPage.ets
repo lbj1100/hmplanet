@@ -1,5 +1,5 @@
 import CardInfoModel from '../viewmodel/PlanetPageData'
-import { Card } from '../viewmodel/CardModel'
+import { Planet } from '../viewmodel/PlanetModel'
 import { CardList } from '../components/CardList'
 import { cardData } from '../viewmodel/CardData'
 import { BreakpointConstants, StyleConstants } from '@ohos/common'
@@ -7,15 +7,26 @@ import { NewPlanetComponent } from '../components/NewPlanetComponent'
 import { RankingComponent } from '../components/RankingComponent'
 import { resourceManager } from '@kit.LocalizationKit'
 import { Recommended } from '../components/Recommended'
+import { router } from '@kit.ArkUI'
+import { SearchComponent } from '../components/SearchComponent'
 
 @Entry({ routeName: 'PlanetPage' })
 @Component
 export struct PlanetPage {
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm';
-  private onClickItem = (Card: Card) => {};
-  @State cardList: Card[] = [];
+  private onClickItem = (Card: Planet) => {};
+  @State cardList: Planet[] = [];
+
+  dynamicLoading(): void {
+    try {
+      import('../pages/SearchPage');
+    } catch (err) {
+
+    }
+  }
 
   aboutToAppear(): void {
+    this.dynamicLoading();
     console.log('aboutToAppear')
     this.cardList = cardData
   }
@@ -56,12 +67,24 @@ export struct PlanetPage {
         Scroll() {
           Column() {
             Search()
+              .borderRadius($r('app.float.vp_eight'))
+              .margin({
+                left: $r('app.float.vp_eight'),
+                right: $r('app.float.vp_eight'),
+                top: $r('app.float.vp_eight'),
+                bottom: $r('app.float.vp_eight')
+              })
+              .onClick(() => {
+                router.pushNamedRoute({
+                  name: 'SearchPage'
+                })
+              })
             CardList({
               cardList: $cardList,
               column: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? StyleConstants.DISPLAY_FOUR :
                 (this.currentBreakpoint === BreakpointConstants.BREAKPOINT_MD ?
                 StyleConstants.DISPLAY_THREE : StyleConstants.DISPLAY_TWO),
-              onClickItem: (data: Card): void => this.onClickItem(data)
+              onClickItem: (data: Planet): void => this.onClickItem(data)
             })
             NewPlanetComponent()
             RankingComponent()

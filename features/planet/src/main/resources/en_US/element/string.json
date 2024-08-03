@@ -43,6 +43,14 @@
     {
       "name": "recommended_more",
       "value": "See More"
+    },
+    {
+      "name": "search_cancel",
+      "value": "cancel"
+    },
+    {
+      "name": "search_placeholder",
+      "value": "Search for planets, users, or content"
     }
   ]
 }

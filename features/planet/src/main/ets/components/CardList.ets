@@ -1,5 +1,5 @@
 import { StyleConstants, CommonDataSource } from '@ohos/common';
-import { Card } from '../viewmodel/CardModel';
+import { Planet } from '../viewmodel/PlanetModel';
 import { EmptyComponent } from './EmptyComponent';
 import { resourceManager } from '@kit.LocalizationKit';
 
@@ -8,13 +8,14 @@ import { resourceManager } from '@kit.LocalizationKit';
  */
 @Component
 export struct CardList {
-  @Link cardList: Card[];
+  @Link cardList: Planet[];
   @Prop column: number = 0;
-  private onClickItem? = (card: Card) => {
+  private onClickItem? = (card: Planet) => {
   };
   @State listLength: number = 0;
 
   aboutToAppear(): void {
+    // TODO 尝试使用resourceManager获取资源失败，暂时使用固定值
     // resourceManager.getSystemResourceManager().getStringValue($r('app.float.card_item_height')).then((value) => {
     //   console.info('card_item_height:' + value)
     //   this.listLength = this.cardList.length * Number(value)
@@ -24,7 +25,7 @@ export struct CardList {
   }
 
   @Builder
-  CardItem(info: Card) {
+  CardItem(info: Planet) {
     Column() {
       Image($r('app.media.default_img'))
         .width('100%')
@@ -88,7 +89,7 @@ export struct CardList {
   build() {
     if (this.cardList.length > 0) {
       List({ space: StyleConstants.TWELVE_SPACE }) {
-        LazyForEach(new CommonDataSource<Card>(this.cardList), (item: Card) => {
+        LazyForEach(new CommonDataSource<Planet>(this.cardList), (item: Planet) => {
           ListItem() {
             this.CardItem(item)
           }
@@ -98,7 +99,7 @@ export struct CardList {
               this.onClickItem(item);
             }
           })
-        }, (item: Card) => JSON.stringify(item))
+        }, (item: Planet) => JSON.stringify(item))
       }
       .enableScrollInteraction(false)
       .cachedCount(6)
