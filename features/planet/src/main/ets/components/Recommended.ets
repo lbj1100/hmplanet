@@ -1,6 +1,8 @@
 import { StyleConstants } from '@ohos/common'
 import { PlanetConstants } from '../constants/PlanetConstants'
-import { Planet } from '../viewmodel/PlanetModel'
+import { Planet } from '@ohos/common'
+import { router } from '@kit.ArkUI'
+import { MorePlanetItem } from './MorePlanetItem'
 
 @Preview
 @Component
@@ -66,8 +68,8 @@ export struct Recommended {
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Center)
     .padding({
-      left: $r('app.float.vp_twelve'),
-      right: $r('app.float.vp_twelve')
+      // left: $r('app.float.vp_twelve'),
+      // right: $r('app.float.vp_twelve')
     })
     .borderRadius($r('app.float.vp_eight'))
   }
@@ -108,12 +110,13 @@ export struct Recommended {
         List() {
           ForEach(this.recommended3Item, (item: Planet) => {
             ListItem() {
-              this.RecommendedItem(item)
+              // this.RecommendedItem(item)
+              MorePlanetItem({ item: item })
             }
           })
         }
         .width(StyleConstants.FULL_WIDTH)
-        .height(PlanetConstants.RECOMMENDED_ITEM_HEIGHT * 3)
+        .height((PlanetConstants.RECOMMENDED_ITEM_HEIGHT + 12) * 3)
         .alignListItem(ListItemAlign.Center)
       }
       .margin({
@@ -132,6 +135,14 @@ export struct Recommended {
       .justifyContent(FlexAlign.Center)
       .borderRadius($r('app.float.vp_eight'))
       .backgroundColor($r('app.color.recommended_bg'))
+      .onClick(() => {
+        router.pushNamedRoute({
+          name: 'MorePage',
+          params: {
+            'title': '你可能感兴趣的星球'
+          }
+        })
+      })
     }
     .margin({
       top: $r('app.float.vp_thirty'),

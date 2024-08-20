@@ -1,8 +1,9 @@
 import { StyleConstants } from '@ohos/common/Index'
 import { PlanetConstants } from '../constants/PlanetConstants'
 import { router } from '@kit.ArkUI'
-import { Planet } from '../viewmodel/PlanetModel'
-import { cardData } from '../viewmodel/CardData'
+
+import { Planet } from '@ohos/common'
+import { cardData } from '../model/CardData'
 import { PreferencesUtil } from '@ohos/datastore'
 import { BusinessError } from '@kit.BasicServicesKit'
 
@@ -10,9 +11,13 @@ import { BusinessError } from '@kit.BasicServicesKit'
 @Entry({ routeName: 'SearchPage' })
 @Component
 export struct SearchPage {
+
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
   @State rankings: Planet[] = []
-  // TODO 搜索历史Set
   @State searchHistory: string[] = []
+  @State cw: number = 0
+  @State ch: number = 0
   private preferencesUtil: PreferencesUtil = PreferencesUtil.getInstance()
   private hasHistory: boolean = false
 
@@ -30,19 +35,23 @@ export struct SearchPage {
     Row() {
       if (index < 3) {
         if (index === 0) {
+          // 第一名
           Image($r('app.media.ic_ranking_first'))
             .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
             .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
         } else if (index === 1) {
+          // 第二名
           Image($r('app.media.ic_ranking_second'))
             .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
             .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
         } else {
+          // 第三名
           Image($r('app.media.ic_ranking_third'))
             .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
             .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
         }
       } else {
+        // 第三后的排名
         Text((index + 1).toString())
           .fontSize(16)
           .width(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
@@ -73,7 +82,7 @@ export struct SearchPage {
     Column() {
       Row() {
         Search()
-          .width('70%')
+          .width(this.cw - 28)
           .borderRadius(8)
           .onSubmit((value: string) => {
             // 提交事件
@@ -85,8 +94,8 @@ export struct SearchPage {
             // 从头插入
             this.searchHistory.unshift(value)
             // this.searchHistory.push(value)
-            if (this.searchHistory.length > 10) {
-              this.searchHistory.shift()
+            if (this.searchHistory.length > 5) {
+              this.searchHistory.pop()
             }
             this.preferencesUtil.setValue('searchHistory', this.searchHistory).then(() => {
               console.info('save search history success')
@@ -105,6 +114,11 @@ export struct SearchPage {
       }
       .width(StyleConstants.FULL_WIDTH)
       .justifyContent(FlexAlign.Center)
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        this.cw = new Number(newValue.width).valueOf()
+        console.log('newValue:', newValue.height);
+        this.ch = new Number(newValue.height).valueOf()
+      })
 
       // 搜索历史保存在preferences中
       if (this.searchHistory.length > 0) {
@@ -204,5 +218,11 @@ export struct SearchPage {
       left: $r('app.float.vp_eight'),
       right: $r('app.float.vp_eight')
     })
+    .padding({
+      top: this.statusBarHeight,
+      bottom: this.bottomRectHeight,
+      left: $r('app.float.vp_eight'),
+      right: $r('app.float.vp_eight')
+    }) // 此处margin具体数值在实际中应与导航条区域高度保持一致
   }
 }

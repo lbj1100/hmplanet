@@ -6,11 +6,13 @@ import {
 import { PageConstants } from '../constants/PageConstants';
 import { TabButtonInfoModel, tabButtonInfo } from '../viewmodel/MainPageData';
 import { PlanetPage } from  '@ohos/planet'
+import { Planet } from '@ohos/common';
+import { News } from '@ohos/dynamic';
 
 @Entry({ routeName: 'MainPage' })
 @Component
 struct MainPage {
-  @State msg:string = "home"
+  // @State msg:string = "home"
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm';
   @StorageLink('IndexPage') currentPageIndex: number = 0;
   bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
@@ -41,18 +43,7 @@ struct MainPage {
 
         TabContent() {
           // Text("NewProduct")
-          List() {
-            ForEach(tabButtonInfo, (item: TabButtonInfoModel) => {
-              ListItem(){
-                Column() {
-                  Text(item.title)
-                }
-                .height('400vp')
-                .borderColor('#000000')
-                .borderWidth(3)
-              }
-            }, (item: TabButtonInfoModel) => item.index.toString())
-          }
+          News()
         }
         .tabBar(this.BottomNavigation(tabButtonInfo[PageConstants.NEW_PRODUCT_INDEX]))
 

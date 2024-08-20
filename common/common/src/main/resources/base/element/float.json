@@ -1,0 +1,24 @@
+{
+  "float": [
+    {
+      "name": "vp_six",
+      "value": "6vp"
+    },
+    {
+      "name": "vp_eight",
+      "value": "8vp"
+    },
+    {
+      "name": "vp_thirtysix",
+      "value": "36vp"
+    },
+    {
+      "name": "vp_twenty",
+      "value": "20vp"
+    },
+    {
+      "name": "vp_twelve",
+      "value": "12vp"
+    }
+  ]
+}

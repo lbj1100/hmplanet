@@ -31,7 +31,7 @@ export struct NewPlanetComponent {
 
       Button() {
         Row() {
-          Image($r('app.media.default_img')) // 显示图片
+          Image($r('app.media.issue')) // 显示图片
             .width($r('app.float.new_planet_image_size')) // 设置宽度
             .height($r('app.float.new_planet_image_size')) // 设置高度
 

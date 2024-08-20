@@ -1,5 +1,6 @@
 import { StyleConstants } from '@ohos/common'
 import { PlanetConstants } from '../constants/PlanetConstants'
+import { router } from '@kit.ArkUI'
 
 
 @Entry
@@ -12,9 +13,9 @@ export struct RankingComponent {
         Text(value)
           .fontSize(14)
           .fontWeight(FontWeight.Bold)
-        Image($r('app.media.default_img'))
-          .width($r('app.float.vp_twenty'))
-          .height($r('app.float.vp_twenty'))
+        Image($r('app.media.ic_right_triangle'))
+          .width($r('app.float.vp_ten'))
+          .height($r('app.float.vp_ten'))
       }
       .width(StyleConstants.FULL_WIDTH)
       .justifyContent(FlexAlign.SpaceBetween)
@@ -63,10 +64,24 @@ export struct RankingComponent {
         }
 
         Row() {
-          Text($r('app.string.rankings_more'))
-            .fontColor(Color.Gray)
-            .fontSize(14)
+          // Text($r('app.string.rankings_more'))
+          //   .fontColor(Color.Gray)
+          //   .fontSize(14)
           // Image()
+          Button() {
+            Text($r('app.string.rankings_more'))
+              .fontColor(Color.Gray)
+              .fontSize(14)
+          }
+          .backgroundColor(Color.Transparent)
+          .onClick(() => {
+            router.pushNamedRoute({
+              name: 'MorePage',
+              params: {
+                title: $r('app.string.rankings_more')
+              }
+            })
+          })
         }
       }
       .width(StyleConstants.FULL_WIDTH)

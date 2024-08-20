@@ -1,0 +1,8 @@
+{
+  "src": [
+    "pages/News",
+    "pages/Notes",
+    "pages/AboutMe",
+    "pages/Sys_Message"
+  ]
+}

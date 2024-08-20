@@ -8,6 +8,8 @@
   "dependencies": {
     "@ohos/common": "file:../../common/common",
     "@ohos/login": "file:../../features/login",
-    "@ohos/planet": "file:../../features/planet"
+    "@ohos/planet": "file:../../features/planet",
+    "@ohos/datastore": "file:../../common/datastore",
+    "@ohos/dynamic": "file:../../features/dynamic"
   }
 }

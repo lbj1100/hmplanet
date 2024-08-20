@@ -1,11 +1,12 @@
 import { StyleConstants, CommonDataSource } from '@ohos/common';
-import { Planet } from '../viewmodel/PlanetModel';
+import { Planet } from '@ohos/common';
 import { EmptyComponent } from './EmptyComponent';
 import { resourceManager } from '@kit.LocalizationKit';
 
 /**
  * Card list component.
  */
+
 @Component
 export struct CardList {
   @Link cardList: Planet[];
@@ -42,6 +43,10 @@ export struct CardList {
           .fontSize($r('app.float.middle_font_size'))
           .fontWeight(StyleConstants.FONT_WEIGHT_FOUR)
           .lineHeight($r('app.float.card_desc_height'))
+          .maxLines(1)
+          .textOverflow({
+            overflow: TextOverflow.Ellipsis
+          })
         Row() {
           Text(info.author)
             .textAlign(TextAlign.Center)
@@ -51,6 +56,7 @@ export struct CardList {
             .width($r('app.float.vp_twenty'))
             .height($r('app.float.vp_twenty'))
             .borderRadius($r('app.float.vp_ten'))
+            .backgroundColor($r('app.color.author_bg_color'))
         }
         .width(StyleConstants.FULL_WIDTH)
         .padding({
@@ -81,6 +87,7 @@ export struct CardList {
     }
     .height($r('app.float.card_item_height'))
     .width(StyleConstants.FULL_WIDTH)
+    .zIndex(-1)
     .backgroundColor($r('app.color.card_bg_color'))
     .borderRadius($r('app.float.vp_eight'))
     .backgroundImagePosition(Alignment.Top)

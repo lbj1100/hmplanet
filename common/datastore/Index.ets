@@ -2,3 +2,4 @@
 // let preferenceObj = new PreferencesUtil();
 // export default preferenceObj;
 export { PreferencesUtil } from './src/main/ets/components/datastore/PreferencesUtil'
+export { CommonDataSource } from './src/main/ets/utils/CommonDataSource'

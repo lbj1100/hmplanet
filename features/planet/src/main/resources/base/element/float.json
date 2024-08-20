@@ -74,7 +74,7 @@
     },
     {
       "name": "new_planet_image_size",
-      "value": "30vp"
+      "value": "15vp"
     },
     {
       "name": "new_planet_font_size",
@@ -117,12 +117,24 @@
       "value": "30vp"
     },
     {
+      "name": "vp_thirtyfour",
+      "value": "34vp"
+    },
+    {
+      "name": "vp_thirtysix",
+      "value": "36vp"
+    },
+    {
       "name": "vp_fourteen",
       "value": "14vp"
     },
     {
       "name": "vp_forty",
       "value": "40vp"
+    },
+    {
+      "name": "vp_thirtytwo",
+      "value": "32vp"
     }
   ]
 }

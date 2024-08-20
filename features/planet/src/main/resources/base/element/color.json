@@ -63,6 +63,22 @@
     {
       "name": "divider_color",
       "value": "#f6f6f6"
+    },
+    {
+      "name": "more_page_bg",
+      "value": "#f6f6f6"
+    },
+    {
+      "name": "more_page_item_bg",
+      "value": "#ffffff"
+    },
+    {
+      "name": "more_page_item_font",
+      "value": "#000000"
+    },
+    {
+      "name": "author_bg_color",
+      "value": "#ffffff"
     }
   ]
 }

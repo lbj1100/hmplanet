@@ -1,0 +1,20 @@
+{
+  "color": [
+    {
+      "name": "tab_page_item_bg",
+      "value": "#dddddd"
+    },
+    {
+      "name": "tab_page_item_focus_bg",
+      "value": "#18b797"
+    },
+    {
+      "name": "tab_page_item_focus_font",
+      "value": "#ffffff"
+    },
+    {
+      "name": "tab_page_item_font",
+      "value": "#000000"
+    }
+  ]
+}

@@ -46,6 +46,22 @@
     {
       "name": "datastore",
       "srcPath": "./common/datastore",
+    },
+    {
+      "name": "news",
+      "srcPath": "./features/news",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dynamic",
+      "srcPath": "./features/dynamic"
     }
   ]
 }
