@@ -10,6 +10,8 @@
     "@ohos/login": "file:../../features/login",
     "@ohos/planet": "file:../../features/planet",
     "@ohos/datastore": "file:../../common/datastore",
-    "@ohos/dynamic": "file:../../features/dynamic"
+    "@ohos/dynamic": "file:../../features/dynamic",
+    "@ohos/network": "file:../../common/network",
+    "@ohos/me": "file:../../features/me",
   }
 }

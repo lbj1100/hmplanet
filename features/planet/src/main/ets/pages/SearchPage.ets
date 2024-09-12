@@ -58,7 +58,7 @@ export struct SearchPage {
           .height(PlanetConstants.RANKINGS_INDEX_IMG_SIZE)
           .textAlign(TextAlign.Center)
       }
-      Image(value.authorImg)
+      Image(value.images)
         .width(PlanetConstants.RANKINGS_IMG_SIZE)
         .height(PlanetConstants.RANKINGS_IMG_SIZE)
         .margin({

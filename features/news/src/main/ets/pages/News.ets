@@ -7,26 +7,36 @@ struct News {
   @State expandedItems: Set<number> = new Set();
   @State showMore: boolean = false
   @State showButton: boolean = false
-  @State text: string = ' NEXT Beta 版本鸿蒙应用开发视频教程来了，由于平台暂时无法提交视频，需要达到一定人数，所以目前提供哗哩哔哩视频链接供大家学习，后期会在星球持续更新，学习内容包含 环境搭建、ArkTS语法、ArkUI组件、Ability开发、服务卡片、数据管理、文件管理、网络请求、分布式特性、项目等知识点，祝大家学习愉快!!!'
+  @State text: string =
+    ' NEXT Beta 版本鸿蒙应用开发视频教程来了，由于平台暂时无法提交视频，需要达到一定人数，所以目前提供哗哩哔哩视频链接供大家学习，后期会在星球持续更新，学习内容包含 环境搭建、ArkTS语法、ArkUI组件、Ability开发、服务卡片、数据管理、文件管理、网络请求、分布式特性、项目等知识点，祝大家学习愉快!!!'
   @State likedItems: Set<number> = new Set();
   @State likeCounts: Map<number, number> = new Map();
   @State text1: string = '鸿蒙学习社区（HarmonyOS NEXT）'
-
   dialogController: CustomDialogController | null = new CustomDialogController({
     builder: CustomDialogExample({
       text1: this.text1,
-      cancel: ()=> { this.onCancel() },
-      confirm: ()=> { this.onAccept() }
+      cancel: () => {
+        this.onCancel()
+      },
+      confirm: () => {
+        this.onAccept()
+      }
     }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
     customStyle: false,
-    cornerRadius: { topLeft: '15vp', topRight: '15vp' , bottomLeft: '0vp', bottomRight: '0vp'},
+    cornerRadius: {
+      topLeft: '15vp',
+      topRight: '15vp',
+      bottomLeft: '0vp',
+      bottomRight: '0vp'
+    },
     width: '107%',
     height: 260,
     backgroundColor: 0xf5f6f8,
     maskColor: 0x99000000,
   })
+
   // 在自定义组件即将析构销毁时将dialogController置空
   aboutToDisappear() {
     this.dialogController = null // 将dialogController置空
@@ -41,7 +51,7 @@ struct News {
   }
 
   build() {
-    Column() {
+    Flex({ direction: FlexDirection.Column }) {
       Row() {
         RelativeContainer() {
           Text("动态")
@@ -54,32 +64,31 @@ struct News {
           Button() {
             Row() {
               Image($r('app.media.message'))
-                .width(17)
+                .width(15)
                 .height(15)
-                .align(Alignment.Start)
                 .padding({ right: 2 })
               Text('与我相关')
                 .fontColor(Color.Gray)
                 .fontSize(12)
             }
+            .alignItems(VerticalAlign.Center)
           }
-          .onClick(()=>{
+          .onClick(() => {
             router.pushUrl({
-              url:'pages/AboutMe'
+              url: 'pages/AboutMe'
             })
           })
           .backgroundColor(0xf6f6f6)
           .width('23%')
-          .height('50%')
           .margin({ right: 10 })
           .alignRules({
             right: { anchor: "__container__", align: HorizontalAlign.End },
             center: { anchor: "__container__", align: VerticalAlign.Center },
           })
         }
-        .height('7%')
         .width('100%')
       }
+      .height('7%')
 
       Column() {
         Row() {
@@ -99,6 +108,7 @@ struct News {
               .backgroundColor(0xeef6f9)
 
               .alignSelf(ItemAlign.Center)
+
               Blank()
                 .width(10)
               Text('私信')
@@ -107,7 +117,7 @@ struct News {
           }
           .stateEffect(false)
           .backgroundColor(Color.Transparent)
-          .height("7%")
+          // .height("7%")
 
           Button() {
             Image($r('app.media.back'))
@@ -118,13 +128,13 @@ struct News {
           .stateEffect(false)
           .backgroundColor(Color.Transparent)
         }
-        .onClick(()=>{
+        .onClick(() => {
           router.pushUrl({
-            url:'pages/Notes'
+            url: 'pages/Notes'
           })
         })
         .justifyContent(FlexAlign.SpaceBetween)
-        .width('93%')
+        .width('100%')
 
         Blank()
           .height(1)
@@ -139,7 +149,7 @@ struct News {
                   .width(20)
                   .height(20)
                   .zIndex(1)
-                  .margin({top: 5})
+                  .margin({ top: 5 })
               }
               .width(30)
               .height(30)
@@ -167,7 +177,7 @@ struct News {
           .backgroundColor(Color.Transparent)
           .stateEffect(false)
           .width("85%")
-          .height("9%")
+          .height(70)
           .borderRadius(20)
 
           Button() {
@@ -178,13 +188,14 @@ struct News {
           }
           .backgroundColor(Color.Transparent)
         }
-        .onClick(()=>{
+        .onClick(() => {
           router.pushUrl({
-            url:'pages/Sys_Message'
+            url: 'pages/Sys_Message'
           })
         })
         .justifyContent(FlexAlign.SpaceBetween)
-        .width('93%')
+        .alignItems(VerticalAlign.Center)
+        .width('100%')
       }
 
       Blank()
@@ -252,28 +263,28 @@ struct News {
                               .textAlign(TextAlign.Start)
                               .fontColor(Color.Black)
                               .backgroundColor(Color.Transparent)
-                              .padding({ top: 5 , bottom: 10 })
+                              .padding({ top: 5, bottom: 10 })
                           }
                           .width('95%')
 
                           if (this.text.split(/[\s\S]{1,27}/).length > 5) {
                             Row() {
                               Button() {
-                                  Text(this.expandedItems.has(item) ? '收起' : '展开更多')
-                                    .fontSize(14)
-                                    .fontWeight(FontWeight.Normal)
-                                    .textAlign(TextAlign.Start)
-                                    .fontColor(0x65768c)
-                                    .backgroundColor(Color.White)
-                                    .padding({ bottom: 10 })
+                                Text(this.expandedItems.has(item) ? '收起' : '展开更多')
+                                  .fontSize(14)
+                                  .fontWeight(FontWeight.Normal)
+                                  .textAlign(TextAlign.Start)
+                                  .fontColor(0x65768c)
+                                  .backgroundColor(Color.White)
+                                  .padding({ bottom: 10 })
+                              }
+                              .onClick(() => {
+                                if (this.expandedItems.has(item)) {
+                                  this.expandedItems.delete(item);
+                                } else {
+                                  this.expandedItems.add(item);
                                 }
-                                .onClick(() => {
-                                  if (this.expandedItems.has(item)) {
-                                    this.expandedItems.delete(item);
-                                  } else {
-                                    this.expandedItems.add(item);
-                                  }
-                                })
+                              })
                             }
                             .width('95%')
                           }
@@ -331,6 +342,7 @@ struct News {
                                   this.likeCounts.set(item, (this.likeCounts.get(item) || 0) + 1);
                                 }
                               })
+
                               Blank()
                                 .width(5)
                               Text(`${this.likeCounts.get(item) || 0}`)
@@ -374,7 +386,7 @@ struct News {
             }
           }, (item: string) => item)
         }
-        .padding({ top: 5, bottom: 200 })
+        .padding({ top: 5, bottom: 0 })
         .listDirection(Axis.Vertical) // 排列方向
         .scrollBar(BarState.Off)
         .friction(0.6)
@@ -390,6 +402,7 @@ struct News {
         .width('100%')
         .height('auto')
       }
+
     }
   }
 }
@@ -397,13 +410,13 @@ struct News {
 
 @CustomDialog
 struct CustomDialogExample {
-  private text1 : string = '';
-
+  private text1: string = '';
   controller?: CustomDialogController
   cancel: () => void = () => {
   }
   confirm: () => void = () => {
   }
+
   build() {
     Column() {
 
@@ -418,13 +431,13 @@ struct CustomDialogExample {
         })
         .margin(15)
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_like'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -447,13 +460,13 @@ struct CustomDialogExample {
       .width('90%')
       .height(45)
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_share'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -477,13 +490,13 @@ struct CustomDialogExample {
       .height(45)
       .margin({ top: 10 })
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_unlike'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -508,13 +521,13 @@ struct CustomDialogExample {
       .height(45)
       .margin({ top: 10 })
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_report'))
             .width(17)
             .height(17)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()

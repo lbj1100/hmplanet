@@ -8,6 +8,7 @@ import { TabButtonInfoModel, tabButtonInfo } from '../viewmodel/MainPageData';
 import { PlanetPage } from  '@ohos/planet'
 import { Planet } from '@ohos/common';
 import { News } from '@ohos/dynamic';
+import { MePage } from '@ohos/me';
 
 @Entry({ routeName: 'MainPage' })
 @Component
@@ -49,8 +50,8 @@ struct MainPage {
 
         TabContent() {
           // Text("ShopCart")
-
-          Text(this.currentBreakpoint)
+          MePage()
+          // Text(this.currentBreakpoint)
         }
         .tabBar(this.BottomNavigation(tabButtonInfo[PageConstants.SHOP_CART_INDEX]))
 

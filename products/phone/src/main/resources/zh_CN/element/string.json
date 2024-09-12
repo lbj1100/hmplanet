@@ -13,12 +13,20 @@
       "value": "label"
     },
     {
+      "name": "planet",
+      "value": "星球"
+    },
+    {
       "name": "me",
       "value": "我"
     },
     {
       "name": "dynamic",
       "value": "动态"
+    },
+    {
+      "name": "internet_reason",
+      "value": "Request network data"
     }
   ]
 }

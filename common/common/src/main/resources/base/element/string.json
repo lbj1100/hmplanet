@@ -6,27 +6,27 @@
     },
     {
       "name": "pull_up_load_text",
-      "value": "加载中..."
+      "value": "Loading..."
     },
     {
       "name": "pull_down_refresh_text",
-      "value": "下拉刷新"
-    },
-    {
-      "name": "release_refresh_text",
-      "value": "松开刷新"
+      "value": "Pull down refresh"
     },
     {
       "name": "refreshing_text",
-      "value": "正在刷新"
+      "value": "Refreshing"
     },
     {
       "name": "refresh_success_text",
-      "value": "刷新成功"
+      "value": "Refresh successfully"
     },
     {
       "name": "refresh_fail_text",
-      "value": "刷新失败"
+      "value": "Refresh failure"
+    },
+    {
+      "name": "release_refresh_text",
+      "value": "Unrefresh"
     }
   ]
 }

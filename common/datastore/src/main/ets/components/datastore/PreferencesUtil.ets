@@ -13,7 +13,7 @@ export class PreferencesUtil {
   private context = getContext(this) as common.UIAbilityContext; // UI 能力的上下文。
   private static instance: PreferencesUtil; // PreferencesUtil 的单例实例。
 
-  private constructor() {
+  constructor() {
     this.initPreference(PREFERENCES_NAME); // 使用指定的存储名称初始化偏好设置。
   }
 

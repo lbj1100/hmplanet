@@ -14,7 +14,7 @@
     },
     {
       "name": "planet",
-      "value": "星球"
+      "value": "planet"
     },
     {
       "name": "me",
@@ -47,6 +47,10 @@
     {
       "name": "refresh_fail_text",
       "value": "刷新失败"
+    },
+    {
+      "name": "internet_reason",
+      "value": "Request network data"
     }
   ]
 }

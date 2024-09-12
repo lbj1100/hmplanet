@@ -1,0 +1,1 @@
+export { MePage } from './src/main/ets/components/mainpage/MePage'

@@ -9,6 +9,7 @@ import { Recommended } from '../components/Recommended'
 import { router } from '@kit.ArkUI'
 import { RefreshModel, PageState, CommonConstant } from '@ohos/common'
 import { listTouchEvent } from '@ohos/common'
+// import { ResponseResult, httpRequestGet, Api, CommonConstant as Const } from '@ohos/network'
 
 let touch = 0;
 
@@ -110,7 +111,26 @@ export struct PlanetPage {
     }
   }
 
+  /*networkRequest(): void {
+    console.log('networkRequest');
+    httpRequestGet(Api.SERVER + Api.GET_NEWS_TYPE).then((response: ResponseResult) => {
+      console.log('lbj response code:', response.code);
+      console.log('lbj response msg:', response.msg);
+      console.log('lbj response data:', response.data);
+      if (response.code === Const.SERVER_CODE_SUCCESS) {
+        console.log('lbj response data:', response.data);
+      } else {
+        // reject(Const.TabBars_DEFAULT_NEWS_TYPES);
+        console.log('lbj err response code:', response.code);
+      }
+
+    }).catch((error: ResponseResult) => {
+      console.log('lbj error:', error);
+    });
+  }*/
+
   aboutToAppear(): void {
+    // this.networkRequest();
     this.changeCategory();
     this.dynamicLoading();
     console.log('aboutToAppear')

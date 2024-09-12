@@ -13,7 +13,7 @@ struct PullToRefreshDemo {
       List({scroller: this.scroller}) {
         ForEach(this.data, (item: number, index: number) => {
           ListItem() {
-            Text('item ' + item)
+            Text('item ' + item).height(300)
           }
         })
       }
@@ -23,7 +23,7 @@ struct PullToRefreshDemo {
   build() {
     Column() {
       PullToRefresh({
-        data: $data,
+        data: this.data,
         scroller: this.scroller,
         customList: () => {
           this.getListView();
@@ -31,12 +31,20 @@ struct PullToRefreshDemo {
         onRefresh: () => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              this.data = [1,2,3,4,5,6,7,8,9,10];
+              this.data = [1,2,3,4,5];
               resolve('refresh success');
             }, 1000);
           });
         },
-        refreshConfigurator: new PullToRefreshConfigurator().setMaxTranslate(50),
+        onLoadMore: () => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              this.data.push(10)
+              resolve('load more success');
+            }, 1000);
+          });
+        },
+        refreshConfigurator: new PullToRefreshConfigurator().setHasLoadMore(true),
         customLoad: null,
         customRefresh: null,
       })

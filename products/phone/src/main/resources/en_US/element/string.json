@@ -13,12 +13,20 @@
       "value": "label"
     },
     {
+      "name": "planet",
+      "value": "planet"
+    },
+    {
       "name": "me",
       "value": "me"
     },
     {
       "name": "dynamic",
       "value": "dynamic"
+    },
+    {
+      "name": "internet_reason",
+      "value": "Request network data"
     }
   ]
 }

@@ -24,15 +24,37 @@ export struct PlanetDetailsPage {
   @State isScrollEnd: boolean = false;
   // 本地数据管理
   // private localDataManager: LocalDataManager = LocalDataManager.instance();
-  @State isRefresh: boolean = true;
+  @State isRefresh: boolean = false;
   // 是否加载完成
   @State isLoad: boolean = false;
   // 屏幕高度
   @State ch: number = 0;
   @State cw: number = 0;
   @State DynamicList: DynamicModel[] = [];
+  // 被选中的星球index
+  @State index: number = 0;
 
   private scroller: Scroller = new Scroller();
+
+
+  dialogController: CustomDialogController | null = new CustomDialogController({
+    builder: CustomDialogExample({
+      text1: this.DynamicList[this.index].planetName,
+      cancel: ()=> { this.onCancel() },
+      confirm: ()=> { this.onAccept() }
+    }),
+    autoCancel: true,
+    alignment: DialogAlignment.Bottom,
+    customStyle: false,
+    cornerRadius: { topLeft: '15vp', topRight: '15vp' , bottomLeft: '0vp', bottomRight: '0vp'},
+    width: '107%',
+    height: 260,
+    backgroundColor: 0xf5f6f8,
+    maskColor: 0x99000000,
+  })
+
+  onCancel() {}
+  onAccept() {}
 
 
 
@@ -62,26 +84,14 @@ export struct PlanetDetailsPage {
     List({ scroller: this.isRefresh ? this.scroller : null }) {
       LazyForEach(new CommonDataSource<DynamicModel>(this.DynamicList), (item: DynamicModel) => {
         ListItem() {
-          /*Text(tag)
-            .height(140)
-            .fontSize(12)
-            .fontColor($r('app.color.tag_font_color'))
-            .backgroundColor($r('app.color.tag_bg_color'))
-            .padding({
-              left: $r('app.float.vp_eight'),
-              right: $r('app.float.vp_eight'),
-              top: $r('app.float.vp_four'),
-              bottom: $r('app.float.vp_four')
-            })
-            .borderRadius($r('app.float.vp_one'))*/
           DynamicListItem({
-            item: item
+            item: item,
+            index: this.index
           })
         }
       })
     }
     .width(StyleConstants.FULL_WIDTH)
-    .height(this.ch - 36 - 38)
     .cachedCount(3)
     .edgeEffect(EdgeEffect.None)
     .nestedScroll({
@@ -107,10 +117,18 @@ export struct PlanetDetailsPage {
             .onClick(() => {
               router.back();
             })
+            .margin({
+              right: 5
+            })
           if (this.isScrollEnd) {
             Text(this.planetInfo?.title)
               .fontSize(20)
-              .fontColor('#000000')
+              .width(this.cw - 20 - 20 - 70 - 20 - 20 - 20 - 5)
+              .fontColor(Color.White)
+              .maxLines(1)
+              .textOverflow({
+                overflow: TextOverflow.Ellipsis
+              })
           }
         }
 
@@ -125,7 +143,7 @@ export struct PlanetDetailsPage {
               })
             Text(/*this.isRefresh +*/ '积分榜')
               .fontSize(10)
-              .fontColor('#ffffff')
+              .fontColor(Color.White)
           }
           .height(24)
           .width(70)
@@ -162,9 +180,9 @@ export struct PlanetDetailsPage {
               Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceBetween }) {
                 Text(this.planetInfo?.title)
                   .fontSize(20)
-                  .fontColor('#ffffff')
+                  .fontColor(Color.White)
                   // 宽度
-                  // .width(this.cw - 200)
+                  .width(this.cw - 200)
                   .maxLines(1)
                   .textOverflow({
                     overflow: TextOverflow.Ellipsis
@@ -172,10 +190,10 @@ export struct PlanetDetailsPage {
                 Button('分享')
                   .width(70)
                   .height(30)
-                  .fontColor('#ffffff')
+                  .fontColor(Color.White)
                   .fontSize(14)
                   .backgroundColor('#aabfbfbf')
-                  .borderColor('#ffffff')
+                  .borderColor(Color.White)
                   .borderWidth(1)
                   .borderRadius(4)
               }
@@ -188,16 +206,16 @@ export struct PlanetDetailsPage {
                     .width(20)
                     .height(20)
                     .borderRadius(10)
-                    .backgroundColor('#ffffff')
+                    .backgroundColor(Color.White)
                     .borderWidth(1)
-                    .borderColor('#ffffff')
+                    .borderColor(Color.White)
                   Image(this.planetInfo?.authorImg)
                     .width(20)
                     .height(20)
                     .borderRadius(10)
-                    .backgroundColor('#ffffff')
+                    .backgroundColor(Color.White)
                     .borderWidth(1)
-                    .borderColor('#ffffff')
+                    .borderColor(Color.White)
                     // .margin({
                     //   left: -3
                     // })
@@ -208,9 +226,9 @@ export struct PlanetDetailsPage {
                     .width(20)
                     .height(20)
                     .borderRadius(10)
-                    .backgroundColor('#ffffff')
+                    .backgroundColor(Color.White)
                     .borderWidth(1)
-                    .borderColor('#ffffff')
+                    .borderColor(Color.White)
                     // .margin({
                     //   left: -3
                     // })
@@ -225,7 +243,7 @@ export struct PlanetDetailsPage {
                   Row() {
                     Text('去提问')
                       .fontSize(12)
-                      .fontColor('#ffffff')
+                      .fontColor(Color.White)
                     Image($r('app.media.ic_right_arrow'))
                       .width(20)
                       .height(20)
@@ -358,7 +376,7 @@ export struct PlanetDetailsPage {
               Image($r('app.media.ic_right_arrow'))
                 .width(20)
                 .height(20)
-                .backgroundColor('#ffffff')
+                .backgroundColor(Color.White)
                 .alignSelf(ItemAlign.Center)
                 // .alignRules({
                 //   right: { anchor: '__container__', align: HorizontalAlign.End },
@@ -370,13 +388,14 @@ export struct PlanetDetailsPage {
 
             if (this.isLoad) {
               PullToRefresh({
-                data: this.TypeList,
+                data: this.DynamicList,
                 customList: () =>{ this.PullToRefreshList() },
                 scroller: this.scroller,
                 refreshConfigurator: new PullToRefreshConfigurator().setHasRefresh(true).setMaxTranslate(60),
                 onRefresh: () => {
                   return new Promise((resolve, reject) => {
                     setTimeout(() => {
+                      this.DynamicList.push(dynamicData[0]);
                       resolve('刷新成功');
                     }, 2000);
                   });
@@ -384,13 +403,37 @@ export struct PlanetDetailsPage {
                 onLoadMore: () => {
                   return new Promise((resolve, reject) => {
                     setTimeout(() => {
+                      // this.DynamicList.push(dynamicData[0]);
+                      console.log('DynamicList:', this.DynamicList.length);
                       resolve('加载成功');
                     }, 2000);
                   });
-                }
+                },
+                customRefresh: null,
+                customLoad: null
               })
                 .height(this.ch - 36 - 38 - 5)
+
+              /*Refresh({
+                refreshing: $$this.isRefresh,
+              }) {
+                this.PullToRefreshList()
+              }
+              .refreshOffset(60)
+              .pullToRefresh(true)
+              .onRefreshing(() => {
+                new Promise<string> ((resolve, reject) => {
+                  setTimeout(() => {
+                    this.DynamicList = dynamicData;
+                    resolve('加载成功');
+                  }, 2000);
+                }).then((value) => {
+                  console.log('value:', value);
+                  this.isRefresh = false;
+                });
+              })*/
             } else {
+
               Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
                 LoadingProgress()
                   .width(50)
@@ -435,7 +478,7 @@ export struct PlanetDetailsPage {
           }
           .width('100%')
           .borderRadius(8)
-          .backgroundColor('#ffffff')
+          .backgroundColor(Color.White)
           .padding({
             right: 8,
             left: 8
@@ -473,10 +516,156 @@ export struct PlanetDetailsPage {
     })
     .padding({
       top: this.statusBarHeight,
-      bottom: this.bottomRectHeight
+      // bottom: this.bottomRectHeight
     }) // 此处margin具体数值在实际中应与导航条区域高度保持一致
     .backgroundImage(this.planetInfo?.images)
     .backgroundImageSize(ImageSize.Cover)
     .backgroundBlurStyle(BlurStyle.Thin)
+  }
+}
+
+@CustomDialog
+struct CustomDialogExample {
+  private text1 : string = '';
+
+  controller?: CustomDialogController
+  cancel: () => void = () => {
+  }
+  confirm: () => void = () => {
+  }
+  build() {
+    Column() {
+
+      Button()
+        .width(60)
+        .height(4)
+        .backgroundColor(0xdbdcde)
+        .onClick(() => {
+          if (this.controller != undefined) {
+            this.controller.close()
+          }
+        })
+        .margin(15)
+
+      Button(){
+        Row() {
+          Image($r('app.media.CD_like'))
+            .width(15)
+            .height(15)
+            .align(Alignment.End)
+            .margin({ left:15 })
+            .onClick(() => {
+              if (this.controller != undefined) {
+                this.controller.close()
+              }
+            })
+
+          Text('加入收藏')
+            .fontSize(12)
+            .align(Alignment.Start)
+            .margin(10)
+            .onClick(() => {
+              this.confirm()
+            })
+        }
+        .width('100%')
+      }
+      .type(ButtonType.Normal)
+      .backgroundColor(Color.White)
+      .borderRadius(5)
+      .width('90%')
+      .height(45)
+
+      Button(){
+        Row() {
+          Image($r('app.media.CD_share'))
+            .width(15)
+            .height(15)
+            .align(Alignment.End)
+            .margin({ left:15 })
+            .onClick(() => {
+              if (this.controller != undefined) {
+                this.controller.close()
+              }
+            })
+
+          Text('分享')
+            .fontSize(12)
+            .align(Alignment.Start)
+            .margin(10)
+            .onClick(() => {
+              this.confirm()
+            })
+        }
+        .width('100%')
+      }
+      .type(ButtonType.Normal)
+      .backgroundColor(Color.White)
+      .borderRadius(5)
+      .width('90%')
+      .height(45)
+      .margin({ top: 10 })
+
+      Button(){
+        Row() {
+          Image($r('app.media.CD_unlike'))
+            .width(15)
+            .height(15)
+            .align(Alignment.End)
+            .margin({ left:15 })
+            .onClick(() => {
+              if (this.controller != undefined) {
+                this.controller.close()
+              }
+            })
+
+          Text('不看该星球：' + this.text1)
+            .fontSize(12)
+            .align(Alignment.Start)
+            .margin(10)
+            .textOverflow({ overflow: TextOverflow.Ellipsis })
+            .onClick(() => {
+              this.confirm()
+            })
+        }
+        .width('100%')
+      }
+      .type(ButtonType.Normal)
+      .backgroundColor(Color.White)
+      .borderRadius(5)
+      .width('90%')
+      .height(45)
+      .margin({ top: 10 })
+
+      Button(){
+        Row() {
+          Image($r('app.media.CD_report'))
+            .width(17)
+            .height(17)
+            .align(Alignment.End)
+            .margin({ left:15 })
+            .onClick(() => {
+              if (this.controller != undefined) {
+                this.controller.close()
+              }
+            })
+
+          Text('投诉')
+            .fontSize(12)
+            .align(Alignment.Start)
+            .margin(10)
+            .onClick(() => {
+              this.confirm()
+            })
+        }
+        .width('100%')
+      }
+      .type(ButtonType.Normal)
+      .backgroundColor(Color.White)
+      .borderRadius(5)
+      .width('90%')
+      .height(45)
+      .margin({ top: 10 })
+    }
   }
 }

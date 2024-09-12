@@ -7,7 +7,8 @@ export struct DynamicListItem {
   @State expandedItems: Set<DynamicModel> = new Set();
   @State likedItems: Set<string> = new Set();
   @State likeCounts: Map<string, number> = new Map();
-
+  @Link index: number;
+  private dialogController1: CustomDialogController | null = null;
   aboutToDisappear() {
     this.dialogController = null // 将dialogController置空
   }

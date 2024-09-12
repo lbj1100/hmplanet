@@ -3,6 +3,30 @@
     {
       "name": "page_show",
       "value": "page from package"
+    },
+    {
+      "name": "pull_up_load_text",
+      "value": "Loading..."
+    },
+    {
+      "name": "pull_down_refresh_text",
+      "value": "Pull down refresh"
+    },
+    {
+      "name": "release_refresh_text",
+      "value": "Unrefresh"
+    },
+    {
+      "name": "refreshing_text",
+      "value": "Refreshing"
+    },
+    {
+      "name": "refresh_success_text",
+      "value": "Refresh successfully"
+    },
+    {
+      "name": "refresh_fail_text",
+      "value": "Refresh failure"
     }
   ]
 }

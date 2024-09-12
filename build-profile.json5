@@ -62,6 +62,14 @@
     {
       "name": "dynamic",
       "srcPath": "./features/dynamic"
+    },
+    {
+      "name": "network",
+      "srcPath": "./common/network",
+    },
+    {
+      "name": "me",
+      "srcPath": "./features/me",
     }
   ]
 }

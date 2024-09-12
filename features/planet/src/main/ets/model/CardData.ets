@@ -117,7 +117,7 @@ const cardData: Planet[] = [
   new Planet(
     "1",
     "3",
-    "如何成为一个邪恶魔术师",
+    "如何成为一个邪恶疯狂魔术师",
     "魔术师",
     $rawfile('avatar/magician_avatar.png'),
     $r('app.media.default_img'),

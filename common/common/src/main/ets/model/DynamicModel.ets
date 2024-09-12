@@ -37,11 +37,11 @@ const dynamicData: DynamicModel[] = [
   new DynamicModel('0'),
   new DynamicModel('1'),
   new DynamicModel('2'),
-  new DynamicModel('3'),
-  new DynamicModel('4'),
-  new DynamicModel('5'),
-  new DynamicModel('6'),
-  new DynamicModel('7'),
+  // new DynamicModel('3'),
+  // new DynamicModel('4'),
+  // new DynamicModel('5'),
+  // new DynamicModel('6'),
+  // new DynamicModel('7'),
 ]
 
 export { dynamicData };

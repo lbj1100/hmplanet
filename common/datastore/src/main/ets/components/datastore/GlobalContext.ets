@@ -1,5 +1,3 @@
-
-
 export class GlobalContext {
   private static instance: GlobalContext;
   private _objects: Map<string, Object>;

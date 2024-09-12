@@ -97,7 +97,7 @@ export struct MorePage {
                 .borderRadius($r('app.float.vp_eight'))
                 .onClick(() => {
                   this.typeIndex = index;
-                  // TODO 网络请求
+                  // 网络请求
                 })
             }
           })
@@ -131,6 +131,7 @@ export struct MorePage {
         }
         .width(StyleConstants.FULL_WIDTH)
         .height(StyleConstants.FULL_HEIGHT)
+        .cachedCount(6)
         .alignListItem(ListItemAlign.Center)
         .scrollBar(BarState.Off)
       }

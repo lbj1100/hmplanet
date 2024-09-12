@@ -1,6 +1,7 @@
 import { listTouchEvent, RefreshModel } from '../common/PullDownRefresh'
 import { CommonConstant, PageState } from '../common/CommonConstant'
 import { PullToRefresh } from '@ohos/pulltorefresh';
+import { httpRequestGet, Api, ResponseResult, CommonConstant as Const } from '@ohos/network';
 
 let touch = 0;
 
@@ -75,8 +76,27 @@ struct Test {
     }
   }
 
+  networkRequest(): void {
+    console.log('networkRequest');
+    httpRequestGet(`${Api.SERVER}/${Api.GET_NEWS_TYPE}`).then((response: ResponseResult) => {
+      console.log('lbj response code:', response.code);
+      console.log('lbj response msg:', response.msg);
+      console.log('lbj response data:', response.data);
+      if (response.code === Const.SERVER_CODE_SUCCESS) {
+        console.log('lbj response data:', response.data);
+      } else {
+        // reject(Const.TabBars_DEFAULT_NEWS_TYPES);
+        console.log('lbj err response code:', response.code);
+      }
+
+    }).catch((error: ResponseResult) => {
+      console.log('lbj error:', error);
+    });
+  }
+
   aboutToAppear(): void {
     // Request news data.
+    this.networkRequest();
     this.changeCategory();
   }
 
