@@ -3,6 +3,7 @@ import { PlanetConstants } from '../constants/PlanetConstants'
 import { Planet } from '@ohos/common'
 import { router } from '@kit.ArkUI'
 import { MorePlanetItem } from './MorePlanetItem'
+import { BuilderNameConstants, buildRouterModel, RouterNameConstants } from '@ohos/routermodule'
 
 @Preview
 @Component
@@ -136,12 +137,15 @@ export struct Recommended {
       .borderRadius($r('app.float.vp_eight'))
       .backgroundColor($r('app.color.recommended_bg'))
       .onClick(() => {
-        router.pushNamedRoute({
-          name: 'MorePage',
-          params: {
-            'title': '你可能感兴趣的星球'
-          }
-        })
+        buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARPLANET_MORE, new Object({
+          title: '你可能感兴趣的星球'
+        }))
+        // router.pushNamedRoute({
+        //   name: 'MorePage',
+        //   params: {
+        //     'title': '你可能感兴趣的星球'
+        //   }
+        // })
       })
     }
     .margin({

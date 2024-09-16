@@ -11,6 +11,9 @@ struct drafts {
   @State popupMessage: string = '';
   dialogController: CustomDialogController | null = null;
   selectedItemIndex: number = -1;
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
+
 
   aboutToDisappear() {
     this.dialogController = null;
@@ -263,6 +266,9 @@ struct drafts {
         }
       });
     }
+    .padding({
+      top: this.statusBarHeight
+    })
   }
 }
 

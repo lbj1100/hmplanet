@@ -1,6 +1,7 @@
 import { StyleConstants } from '@ohos/common'
 import { PlanetConstants } from '../constants/PlanetConstants'
 import { router } from '@kit.ArkUI'
+import { BuilderNameConstants, buildRouterModel, RouterNameConstants } from '@ohos/routermodule'
 
 
 @Entry
@@ -22,6 +23,7 @@ export struct RankingComponent {
       .margin({
         bottom: $r('app.float.vp_eight')
       })
+
       // 三张重叠的图片
       Row() {
         Image($r('app.media.default_author_img'))
@@ -32,8 +34,8 @@ export struct RankingComponent {
         Image($r('app.media.default_author_img'))
           .imgStyle()
           .position({
-          left: PlanetConstants.RANKINGS_IMG_SIZE / 2
-        })
+            left: PlanetConstants.RANKINGS_IMG_SIZE / 2
+          })
 
         Image($r('app.media.default_img'))
           .imgStyle()
@@ -51,6 +53,7 @@ export struct RankingComponent {
     })
     .borderRadius($r('app.float.vp_eight'))
   }
+
   build() {
     Column() {
       Row() {
@@ -75,12 +78,15 @@ export struct RankingComponent {
           }
           .backgroundColor(Color.Transparent)
           .onClick(() => {
-            router.pushNamedRoute({
-              name: 'MorePage',
-              params: {
-                title: $r('app.string.rankings_more')
-              }
-            })
+            buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARPLANET_MORE, new Object({
+              title: $r('app.string.rankings_more')
+            }))
+            // router.pushNamedRoute({
+            //   name: 'MorePage',
+            //   params: {
+            //     title: $r('app.string.rankings_more')
+            //   }
+            // })
           })
         }
       }
@@ -110,7 +116,8 @@ export struct RankingComponent {
   }
 }
 
-@Styles function imgStyle()  {
+@Styles
+function imgStyle() {
   .width(PlanetConstants.RANKINGS_IMG_SIZE)
   .height(PlanetConstants.RANKINGS_IMG_SIZE)
   .borderRadius($r('app.float.vp_eight'))

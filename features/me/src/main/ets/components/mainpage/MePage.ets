@@ -4,6 +4,8 @@ import { router } from '@kit.ArkUI';
 @Component
 export struct MePage {
   @State showSelectedArea: boolean = true;
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
 
   aboutToAppear(): void {
     this.dynamicLoading();
@@ -567,6 +569,5 @@ export struct MePage {
     }
     .width('100%')
     .height('100%')
-
   }
 }

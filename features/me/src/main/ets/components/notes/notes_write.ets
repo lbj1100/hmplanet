@@ -5,6 +5,9 @@ import { router } from '@kit.ArkUI';
 export struct Notes_write {
   @State showTip: boolean = true;
   @State textInput: string = '';
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
+
 
   aboutToAppear(): void {
     this.dynamicLoading();
@@ -153,5 +156,8 @@ export struct Notes_write {
     .alignItems(VerticalAlign.Top)
     .backgroundColor(0xf5f6f8)
     .height('100%')
+    .padding({
+      top: this.statusBarHeight
+    })
   }
 }

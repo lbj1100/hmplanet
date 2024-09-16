@@ -13,5 +13,6 @@
     "@ohos/dynamic": "file:../../features/dynamic",
     "@ohos/network": "file:../../common/network",
     "@ohos/me": "file:../../features/me",
+    "@ohos/routermodule": "file:../../common/RouterModule"
   }
 }

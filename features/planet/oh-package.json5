@@ -9,5 +9,6 @@
     "@ohos/common": "file:../../common/common",
     "@ohos/datastore": "file:../../common/datastore",
     "@ohos/network": "file:../../common/network",
+    "@ohos/routermodule": "file:../../common/RouterModule"
   }
 }

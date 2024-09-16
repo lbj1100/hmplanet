@@ -48,18 +48,6 @@
       "srcPath": "./common/datastore",
     },
     {
-      "name": "news",
-      "srcPath": "./features/news",
-      "targets": [
-        {
-          "name": "default",
-          "applyToProducts": [
-            "default"
-          ]
-        }
-      ]
-    },
-    {
       "name": "dynamic",
       "srcPath": "./features/dynamic"
     },
@@ -70,6 +58,10 @@
     {
       "name": "me",
       "srcPath": "./features/me",
+    },
+    {
+      "name": "RouterModule",
+      "srcPath": "./common/RouterModule",
     }
   ]
 }

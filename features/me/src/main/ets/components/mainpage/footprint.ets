@@ -12,6 +12,9 @@ export struct Footprint {
   @State private selectedArray: number[] = this.arr1; // 默认选中第一个数组
   @State likedItems: Set<number> = new Set();
   @State likeCounts: Map<number, number> = new Map();
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
+
 
   dialogController: CustomDialogController | null = new CustomDialogController({
     builder: CustomDialogExample({
@@ -500,7 +503,9 @@ export struct Footprint {
       .width('100%')
       .height('100%')
     }
-  }
+    .padding({
+      top: this.statusBarHeight
+    })  }
 }
 
 @CustomDialog

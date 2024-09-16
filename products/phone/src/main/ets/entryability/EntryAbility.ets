@@ -26,6 +26,18 @@ export default class EntryAbility extends UIAbility {
       }
       let windowClass: window.Window = windowStage.getMainWindowSync(); // 获取应用主窗口
 
+      // 2.实现沉浸式效果。方式一：设置导航栏、状态栏不显示。
+      let names: Array<'status' | 'navigation'> = ['status'];
+      windowClass.setWindowSystemBarEnable(names, (err: BusinessError) => {
+        let errCode: number = err.code;
+        if (errCode) {
+          console.error('Failed to set the system bar to be visible. Cause:' + JSON.stringify(err));
+          return;
+        }
+        console.info('Succeeded in setting the system bar to be visible.');
+      });
+
+
       // 1. 设置窗口全屏
       let isLayoutFullScreen = true;
       windowClass.setWindowLayoutFullScreen(isLayoutFullScreen)

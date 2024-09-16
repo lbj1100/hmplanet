@@ -8,6 +8,9 @@ struct notes {
   @State arr: number[] = [1,2];
   private count: number = 0;
   // private text: string = '123';
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
+
 
   aboutToAppear(): void {
     this.dynamicLoading();
@@ -318,6 +321,9 @@ struct notes {
     .linearGradient({
       angle: 0,
       colors: [[0xffffff, 0.7], [0xe3fef5, 1.0]]
+    })
+    .padding({
+      top: this.statusBarHeight
     })
   }
 }
