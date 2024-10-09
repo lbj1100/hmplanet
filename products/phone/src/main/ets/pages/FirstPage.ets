@@ -4,7 +4,7 @@ import { router } from '@kit.ArkUI';
 @Component
 struct FirstPage {
   @State message: string = 'Hello World';
-  @State isFirst:boolean = true
+  isFirst:boolean = true
 
   dynamicLoading(): void {
     try {
@@ -16,13 +16,20 @@ struct FirstPage {
 
   aboutToAppear(): void {
     this.dynamicLoading();
-    setTimeout(()=>{}, 1000)
-    if (this.isFirst) {
-      this.isFirst = false
-      router.replaceNamedRoute({
-        name: 'WXLoginPage'
-      })
-    }
+    // TODO 资源加载
+    setTimeout(()=>{
+      if (this.isFirst) {
+        this.isFirst = false
+        router.replaceNamedRoute({
+          name: 'WXLoginPage'
+        })
+      } else {
+        router.replaceNamedRoute({
+          name: 'MainPage'
+        })
+      }
+    }, 1000)
+
   }
   build() {
     RelativeContainer() {

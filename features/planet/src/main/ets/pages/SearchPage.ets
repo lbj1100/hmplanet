@@ -7,8 +7,6 @@ import { BusinessError } from '@kit.BasicServicesKit'
 import { BuilderNameConstants, RouterNameConstants } from '@ohos/routermodule'
 import { RouterModule } from '@ohos/routermodule'
 
-
-// @Entry({ routeName: 'SearchPage' })
 @Component
 struct SearchPage {
 
@@ -22,6 +20,7 @@ struct SearchPage {
   private hasHistory: boolean = false
 
   aboutToAppear(): void {
+    // TODO 获取排行榜数据
     this.rankings = cardData
     this.hasHistory = this.preferencesUtil.hasValueSync('searchHistory');
     // 判断是否有搜索历史
@@ -109,7 +108,7 @@ struct SearchPage {
             .fontSize(14)
             .fontColor($r('app.color.search_cancel_font_color'))
             .onClick(() => {
-              RouterModule.pop(RouterNameConstants.PHONE_HAP)
+              RouterModule.pop(RouterNameConstants.PLANET_HAR)
             })
         }
         .width(StyleConstants.FULL_WIDTH)

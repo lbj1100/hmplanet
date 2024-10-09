@@ -97,6 +97,7 @@ export struct Recommended {
             .fontSize(14)
             .onClick(() => {
               this.isLoading = true
+              // TODO 网络请求
               setTimeout(() => {
                 this.isLoading = false
               }, 2000)

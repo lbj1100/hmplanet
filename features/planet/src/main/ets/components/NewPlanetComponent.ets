@@ -3,6 +3,8 @@ import { StyleConstants } from '@ohos/common'
 @Preview
 @Component
 export struct NewPlanetComponent {
+  @State ch: number = 0;
+  @State cw: number = 0;
   /**
    * 构建新建星球组件
    */
@@ -34,11 +36,19 @@ export struct NewPlanetComponent {
           Image($r('app.media.issue')) // 显示图片
             .width($r('app.float.new_planet_image_size')) // 设置宽度
             .height($r('app.float.new_planet_image_size')) // 设置高度
+            .margin({
+              right: $r('app.float.vp_six')
+            })
 
           Text($r('app.string.new_planet_query')) // 显示文本
+            .width(this.cw < 250 ? this.cw - 15 - 20 - 8 * 2 : 'auto') // 设置宽度
             .fontColor($r('app.color.new_planet_query_font_color')) // 设置字体颜色
             .fontSize($r('app.float.new_planet_font_size')) // 设置字体大小
             .fontWeight(FontWeight.Bold) // 设置字体粗细
+            .maxLines(1) // 设置最大行数
+            .textOverflow({
+              overflow: TextOverflow.Ellipsis
+            }) // 设置文本溢出样式
 
           Image($r('app.media.ic_arrow_right')) // 显示图片
             .width($r('app.float.right_arrow_image_size')) // 设置宽度
@@ -66,5 +76,10 @@ export struct NewPlanetComponent {
       left: $r('app.float.vp_eight'),
       right: $r('app.float.vp_eight')
     }) // 设置外边距
+    .onAreaChange((oldValue: Area, newValue: Area) => {
+      this.cw = new Number(newValue.width).valueOf()
+      console.log('newValue:', newValue.height);
+      this.ch = new Number(newValue.height).valueOf()
+    })
   }
 }

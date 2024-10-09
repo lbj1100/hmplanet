@@ -1,8 +1,11 @@
-import { router } from '@kit.ArkUI'
+// import { router } from '@kit.ArkUI'
 import { pasteboard } from '@kit.BasicServicesKit';
+import { BuilderNameConstants, buildRouterModel, RouterNameConstants } from '@ohos/routermodule';
+import { RouterModule } from '@ohos/routermodule';
 
 @Entry({ routeName: 'notes' })
 @Component
+// 笔记页面
 struct notes {
   @State message: string = '笔记';
   @State arr: number[] = [1,2];
@@ -18,7 +21,7 @@ struct notes {
 
   dynamicLoading(): void {
     try {
-      import('../mainpage/MePage');
+      import('../pages/MePage');
       import('../notes/notes_write');
     } catch (err) {
 
@@ -76,9 +79,10 @@ struct notes {
                 .align(Alignment.Start)
             }
             .onClick(() => {
-              router.replaceNamedRoute({
-                name: 'MePage'
-              })
+              RouterModule.pop(RouterNameConstants.ME_HAR);
+              // router.replaceNamedRoute({
+              //   name: 'MePage'
+              // })
             })
             .backgroundColor(Color.Transparent)
             .width('5%')
@@ -146,9 +150,10 @@ struct notes {
               .backgroundColor(0x18b998)
               .width(130)
               .onClick(() => {
-                router.pushNamedRoute({
-                  name: 'notes_write'
-                })
+                buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARME_NOTES_WRITE);
+                // router.pushNamedRoute({
+                //   name: 'notes_write'
+                // })
               });
 
             Blank()
@@ -302,9 +307,10 @@ struct notes {
               .position({ x: '33%', y: "90%" })
               .backgroundColor(0x18b998)
               .onClick(() => {
-                router.pushNamedRoute({
-                  name: 'notes_write'
-                })
+                buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARME_NOTES_WRITE);
+                // router.pushNamedRoute({
+                //   name: 'notes_write'
+                // })
               });
 
             }
@@ -519,3 +525,17 @@ struct TextCustomDialog {
   }
 }
 
+@Builder function harBuilder(value: object) {
+  NavDestination() {
+    notes()
+  }
+  .hideTitleBar(true)
+  .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+}
+// 注册构建器
+const builderName = BuilderNameConstants.HARME_NOTES;
+// 如果没有注册过，则注册
+if (!RouterModule.getBuilder(builderName)) {
+  let builder: WrappedBuilder<[object]> = wrapBuilder(harBuilder);
+  RouterModule.registerBuilder(builderName, builder);
+}

@@ -7,33 +7,8 @@ export struct DynamicListItem {
   @State expandedItems: Set<DynamicModel> = new Set();
   @State likedItems: Set<string> = new Set();
   @State likeCounts: Map<string, number> = new Map();
+  private openDialog = () =>{};
 
-  aboutToDisappear() {
-    this.dialogController = null // 将dialogController置空
-  }
-
-  dialogController: CustomDialogController | null = new CustomDialogController({
-    builder: CustomDialogExample({
-      text1: this.item.planetName,
-      cancel: ()=> { this.onCancel() },
-      confirm: ()=> { this.onAccept() }
-    }),
-    autoCancel: true,
-    alignment: DialogAlignment.Bottom,
-    customStyle: false,
-    cornerRadius: { topLeft: '15vp', topRight: '15vp' , bottomLeft: '0vp', bottomRight: '0vp'},
-    width: '107%',
-    height: 260,
-    backgroundColor: 0xf5f6f8,
-    maskColor: 0x99000000,
-  })
-  onCancel() {
-    console.info('Callback when the first button is clicked')
-  }
-
-  onAccept() {
-    console.info('Callback when the second button is clicked')
-  }
 
   build() {
     Column() {
@@ -64,9 +39,10 @@ export struct DynamicListItem {
                   .height(10)
               }
               .onClick(() => {
-                if (this.dialogController != null) {
+                /*if (this.dialogController != null) {
                   this.dialogController.open()
-                }
+                }*/
+                this.openDialog();
               })
               .backgroundColor(Color.Transparent)
               .margin({ right: 15 })
@@ -212,152 +188,5 @@ export struct DynamicListItem {
     .width('100%')
     .height('auto')
     .borderRadius(10)
-  }
-}
-
-
-@CustomDialog
-struct CustomDialogExample {
-  private text1 : string = '';
-
-  controller?: CustomDialogController
-  cancel: () => void = () => {
-  }
-  confirm: () => void = () => {
-  }
-  build() {
-    Column() {
-
-      Button()
-        .width(60)
-        .height(4)
-        .backgroundColor(0xdbdcde)
-        .onClick(() => {
-          if (this.controller != undefined) {
-            this.controller.close()
-          }
-        })
-        .margin(15)
-
-      Button(){
-        Row() {
-          Image($r('app.media.CD_like'))
-            .width(15)
-            .height(15)
-            .align(Alignment.End)
-            .margin({ left:15 })
-            .onClick(() => {
-              if (this.controller != undefined) {
-                this.controller.close()
-              }
-            })
-
-          Text('加入收藏')
-            .fontSize(12)
-            .align(Alignment.Start)
-            .margin(10)
-            .onClick(() => {
-              this.confirm()
-            })
-        }
-        .width('100%')
-      }
-      .type(ButtonType.Normal)
-      .backgroundColor(Color.White)
-      .borderRadius(5)
-      .width('90%')
-      .height(45)
-
-      Button(){
-        Row() {
-          Image($r('app.media.CD_share'))
-            .width(15)
-            .height(15)
-            .align(Alignment.End)
-            .margin({ left:15 })
-            .onClick(() => {
-              if (this.controller != undefined) {
-                this.controller.close()
-              }
-            })
-
-          Text('分享')
-            .fontSize(12)
-            .align(Alignment.Start)
-            .margin(10)
-            .onClick(() => {
-              this.confirm()
-            })
-        }
-        .width('100%')
-      }
-      .type(ButtonType.Normal)
-      .backgroundColor(Color.White)
-      .borderRadius(5)
-      .width('90%')
-      .height(45)
-      .margin({ top: 10 })
-
-      Button(){
-        Row() {
-          Image($r('app.media.CD_unlike'))
-            .width(15)
-            .height(15)
-            .align(Alignment.End)
-            .margin({ left:15 })
-            .onClick(() => {
-              if (this.controller != undefined) {
-                this.controller.close()
-              }
-            })
-
-          Text('不看该星球：' + this.text1)
-            .fontSize(12)
-            .align(Alignment.Start)
-            .margin(10)
-            .textOverflow({ overflow: TextOverflow.Ellipsis })
-            .onClick(() => {
-              this.confirm()
-            })
-        }
-        .width('100%')
-      }
-      .type(ButtonType.Normal)
-      .backgroundColor(Color.White)
-      .borderRadius(5)
-      .width('90%')
-      .height(45)
-      .margin({ top: 10 })
-
-      Button(){
-        Row() {
-          Image($r('app.media.CD_report'))
-            .width(17)
-            .height(17)
-            .align(Alignment.End)
-            .margin({ left:15 })
-            .onClick(() => {
-              if (this.controller != undefined) {
-                this.controller.close()
-              }
-            })
-
-          Text('投诉')
-            .fontSize(12)
-            .align(Alignment.Start)
-            .margin(10)
-            .onClick(() => {
-              this.confirm()
-            })
-        }
-        .width('100%')
-      }
-      .type(ButtonType.Normal)
-      .backgroundColor(Color.White)
-      .borderRadius(5)
-      .width('90%')
-      .height(45)
-      .margin({ top: 10 })
-    }
   }
 }

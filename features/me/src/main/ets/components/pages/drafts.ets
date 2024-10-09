@@ -1,8 +1,10 @@
-import { router } from '@kit.ArkUI'
+// import { router } from '@kit.ArkUI'
 import { pasteboard } from '@kit.BasicServicesKit';
+import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/routermodule';
 
 @Entry({ routeName: 'drafts' })
 @Component
+// 草稿箱页面
 struct drafts {
   @State message: string = '草稿箱';
   @State arr: number[] = [1, 2, 3, 4,5,6,7,8];
@@ -25,7 +27,7 @@ struct drafts {
 
   dynamicLoading(): void {
     try {
-      import('../mainpage/MePage');
+      import('./MePage');
     } catch (err) {
 
     }
@@ -93,9 +95,10 @@ struct drafts {
             center: { anchor: "__container__", align: VerticalAlign.Center },
           })
           .onClick(() => {
-            router.replaceNamedRoute({
-              name: 'MainPage'
-            })
+            RouterModule.pop(RouterNameConstants.ME_HAR);
+            // router.replaceNamedRoute({
+            //   name: 'MainPage'
+            // })
           })
 
           Text(this.message)
@@ -359,4 +362,19 @@ struct CustomDialogExample {
       .height(45);
     }
   }
+}
+
+@Builder function harBuilder(value: object) {
+  NavDestination() {
+    drafts()
+  }
+  .hideTitleBar(true)
+  .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+}
+// 注册构建器
+const builderName = BuilderNameConstants.HARME_DRAFTS;
+// 如果没有注册过，则注册
+if (!RouterModule.getBuilder(builderName)) {
+  let builder: WrappedBuilder<[object]> = wrapBuilder(harBuilder);
+  RouterModule.registerBuilder(builderName, builder);
 }

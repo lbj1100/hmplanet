@@ -1,8 +1,11 @@
-import { router } from '@kit.ArkUI';
+// import { router } from '@kit.ArkUI';
+import { BuilderNameConstants, RouterNameConstants } from '@ohos/routermodule';
+import { RouterModule } from '@ohos/routermodule';
 
 @Entry({ routeName: 'notes_write' })
 @Component
-export struct Notes_write {
+// 写笔记页面
+struct NotesWrite {
   @State showTip: boolean = true;
   @State textInput: string = '';
   bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
@@ -40,9 +43,10 @@ export struct Notes_write {
             }
             .backgroundColor(Color.Transparent)
             .onClick(() => {
-              router.replaceNamedRoute({
-                name: 'notes'
-              })
+              RouterModule.pop(RouterNameConstants.ME_HAR);
+              // router.replaceNamedRoute({
+              //   name: 'notes'
+              // })
             })
           }
         }
@@ -160,4 +164,18 @@ export struct Notes_write {
       top: this.statusBarHeight
     })
   }
+}
+@Builder function harBuilder(value: object) {
+  NavDestination() {
+    NotesWrite()
+  }
+  .hideTitleBar(true)
+  .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+}
+// 注册构建器
+const builderName = BuilderNameConstants.HARME_NOTES_WRITE;
+// 如果没有注册过，则注册
+if (!RouterModule.getBuilder(builderName)) {
+  let builder: WrappedBuilder<[object]> = wrapBuilder(harBuilder);
+  RouterModule.registerBuilder(builderName, builder);
 }

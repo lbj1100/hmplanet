@@ -1,10 +1,10 @@
 import { Constants }  from '../constants/LoginConstants';
-import { promptAction, router } from '@kit.ArkUI';
-import { BusinessError } from '@kit.BasicServicesKit';
+import { router } from '@kit.ArkUI';
+import { common } from '@kit.AbilityKit';
 
 @Entry({ routeName: 'WXLoginPage' })
 @Component
-export struct WXLoginPage {
+struct WXLoginPage {
 
   dynamicLoading(): void {
     try {
@@ -63,19 +63,12 @@ export struct WXLoginPage {
         })
         .shadow(ShadowStyle.OUTER_DEFAULT_SM)
         .onClick(()=>{
-          // TODO 微信登录
-          console.log("不知道怎么接入微信登录！！！")
-          router.replaceNamedRoute({
-            name: 'MainPage'
-          }).then(()=>{
-            promptAction.showToast({
-              message: '登录成功'
-            })
-          }).catch((error: BusinessError)=>{
-            promptAction.showToast({
-              message: error.message
-            })
-          })
+          // TODO 微信登录逻辑
+          const bundleName = (getContext(this) as common.UIAbilityContext).applicationInfo.name;
+          const url = `@bundle:${bundleName}/phone/ets/pages/MainPage`;
+          router.pushUrl({
+            url: url
+          });
         })
 
       Row(){

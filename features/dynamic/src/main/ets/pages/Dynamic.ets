@@ -1,31 +1,37 @@
-import { BuilderNameConstants, buildRouterModel, RouterNameConstants } from '@ohos/routermodule';
+import { BuilderNameConstants, buildRouterModel, RouterModule, RouterNameConstants } from '@ohos/routermodule';
 import { DynamicListItem } from '../components/DynamicListItem';
 import { dynamicData, DynamicModel } from '../model/DynamicModel';
 
 
 @Component
 export struct Dynamic {
-  private dynamicData: DynamicModel[] = [];
-  /*@State expandedItems: Set<DynamicModel> = new Set();
-  @State showMore: boolean = false
-  @State showButton: boolean = false
-  @State text: string = ' NEXT Beta 版本鸿蒙应用开发视频教程来了，由于平台暂时无法提交视频，需要达到一定人数，所以目前提供哗哩哔哩视频链接供大家学习，后期会在星球持续更新，学习内容包含 环境搭建、ArkTS语法、ArkUI组件、Ability开发、服务卡片、数据管理、文件管理、网络请求、分布式特性、项目等知识点，祝大家学习愉快!!!'*/
-
+  // TODO 需要 嵌套监听？
+  @State dynamicData: DynamicModel[] = [];
+  private index: number = 0;
   @Consume dynamicPathStack: NavPathStack;
   @State likedItems: Set<number> = new Set();
   @State likeCounts: Map<number, number> = new Map();
-  @State text1: string = '鸿蒙学习社区（HarmonyOS NEXT）'
-
+  bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
+  statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
   dialogController: CustomDialogController | null = new CustomDialogController({
     builder: CustomDialogExample({
-      text1: this.text1,
-      cancel: ()=> { this.onCancel() },
-      confirm: ()=> { this.onAccept() }
+      text1: this.dynamicData[this.index].planetName,
+      cancel: () => {
+        this.onCancel()
+      },
+      confirm: () => {
+        this.onAccept()
+      }
     }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
     customStyle: false,
-    cornerRadius: { topLeft: '15vp', topRight: '15vp' , bottomLeft: '0vp', bottomRight: '0vp'},
+    cornerRadius: {
+      topLeft: '15vp',
+      topRight: '15vp',
+      bottomLeft: '0vp',
+      bottomRight: '0vp'
+    },
     width: '107%',
     height: 260,
     backgroundColor: 0xf5f6f8,
@@ -34,7 +40,13 @@ export struct Dynamic {
 
   aboutToAppear(): void {
     // this.dynamicLoading();
+    // TODO 从后台获取动态数据
     this.dynamicData = dynamicData;
+
+    if (!this.dynamicPathStack) {
+      this.dynamicPathStack = new NavPathStack();
+    }
+    RouterModule.createRouter(RouterNameConstants.DYNAMIC_HAR, this.dynamicPathStack);
   }
 
   // 在自定义组件即将析构销毁时将dialogController置空
@@ -50,8 +62,15 @@ export struct Dynamic {
     console.info('Callback when the second button is clicked')
   }
 
+  @Builder
+  routerMap(builderName: string, param: object) {
+    // Obtain the WrappedBuilder object based on the module name, create a page through the builder interface, and import the param parameter.
+    RouterModule.getBuilder(builderName).builder(param);
+  };
+
   build() {
     Navigation(this.dynamicPathStack) {
+      /*Flex({ direction: FlexDirection.Column })*/
       Column() {
         Row() {
           RelativeContainer() {
@@ -76,9 +95,7 @@ export struct Dynamic {
               }
             }
             .onClick(() => {
-              buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARDYNAMIC_ABOUT, new Object({
-
-              }))
+              buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARDYNAMIC_ABOUT, new Object({}))
             })
             .backgroundColor(0xf6f6f6)
             .width('23%')
@@ -190,9 +207,7 @@ export struct Dynamic {
             .backgroundColor(Color.Transparent)
           }
           .onClick(() => {
-            buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARDYNAMIC_SYSMAG, new Object({
-
-            }))
+            buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARDYNAMIC_SYSMAG, new Object({}))
           })
           .justifyContent(FlexAlign.SpaceBetween)
           .width('93%')
@@ -202,231 +217,239 @@ export struct Dynamic {
           .height(7)
           .color(0xf5f6f8)
 
-        Column() {
-          List({ space: 5, initialIndex: 0 }) {
-            ForEach(this.dynamicData, (item: DynamicModel) => {
-              ListItem() {
-                /*Column() {
-                  Row() {
-                    Image($r('app.media.app_icon'))
-                      .width(30)
-                      .height(30)
-                      .borderRadius(25)
-                      .alignSelf(ItemAlign.Start)
-                      .margin({ left: 5 })
+        List({ space: 5, initialIndex: 0 }) {
+          ForEach(this.dynamicData, (item: DynamicModel, index: number) => {
+            ListItem() {
+              /*Column() {
+                Row() {
+                  Image($r('app.media.app_icon'))
+                    .width(30)
+                    .height(30)
+                    .borderRadius(25)
+                    .alignSelf(ItemAlign.Start)
+                    .margin({ left: 5 })
 
-                    Column() {
-                      Row() {
-                        Column() {
-                          Text('用户名')
-                            .fontSize(12)
-                            .fontColor(0x65768c)
-                          Text('2021-08-01')
-                            .fontColor(Color.Gray)
-                            .fontSize(10)
-                        }
-                        .alignItems(HorizontalAlign.Start)
-
-                        Row() {
-                          Button() {
-                            Image($r('app.media.more'))
-                              .width(10)
-                              .height(10)
-                          }
-                          .onClick(() => {
-                            if (this.dialogController != null) {
-                              this.dialogController.open()
-                            }
-                          })
-                          .backgroundColor(Color.Transparent)
-                          .margin({ right: 15 })
-
-                          Blank()
-                            .width(10)
-                        }
+                  Column() {
+                    Row() {
+                      Column() {
+                        Text('用户名')
+                          .fontSize(12)
+                          .fontColor(0x65768c)
+                        Text('2021-08-01')
+                          .fontColor(Color.Gray)
+                          .fontSize(10)
                       }
-                      .width('90%')
-                      .height('auto')
-                      .justifyContent(FlexAlign.SpaceBetween)
-
-                      Row() {
-                        Column() {
-                          Column() {
-                            Row() {
-                              Text(this.text)
-                                .lineHeight(20)
-                                .width('85%')
-                                .fontSize(14)
-                                .maxLines(this.expandedItems.has(item) ? undefined : 5)
-                                .textOverflow({ overflow: TextOverflow.Ellipsis })
-                                .fontWeight(FontWeight.Normal)
-                                .textAlign(TextAlign.Start)
-                                .fontColor(Color.Black)
-                                .backgroundColor(Color.Transparent)
-                                .padding({ top: 5 , bottom: 10 })
-                            }
-                            .width('95%')
-
-                            if (this.text.split(/[\s\S]{1,27}/).length > 5) {
-                              Row() {
-                                Button() {
-                                    Text(this.expandedItems.has(item) ? '收起' : '展开更多')
-                                      .fontSize(14)
-                                      .fontWeight(FontWeight.Normal)
-                                      .textAlign(TextAlign.Start)
-                                      .fontColor(0x65768c)
-                                      .backgroundColor(Color.White)
-                                      .padding({ bottom: 10 })
-                                  }
-                                  .onClick(() => {
-                                    if (this.expandedItems.has(item)) {
-                                      this.expandedItems.delete(item);
-                                    } else {
-                                      this.expandedItems.add(item);
-                                    }
-                                  })
-                              }
-                              .width('95%')
-                            }
-                          }
-                          .height('auto')
-
-                          Image($r('app.media.app_icon'))
-                            .width(60)
-                            .height(60)
-                            .alignSelf(ItemAlign.Start)
-
-                        }
-                        .margin({ left: 10, bottom: 10 })
-                      }
+                      .alignItems(HorizontalAlign.Start)
 
                       Row() {
                         Button() {
-                          Row() {
-                            Image($r('app.media.app_icon'))
-                              .width(15)
-                              .height(15)
-                              .margin({ right: 5 })
-                            Text(this.text1)
-                              .fontSize(10)
-                              .fontWeight(FontWeight.Normal)
-                              .maxLines(1)
-                              .textOverflow({ overflow: TextOverflow.Ellipsis })
-                              .fontColor(0x65768c)
-                              .width('60%')
-                          }
-                          .padding({ left: 10, right: 10 })
+                          Image($r('app.media.more'))
+                            .width(10)
+                            .height(10)
                         }
-                        .height(25)
-                        .backgroundColor(0xf4f4f6)
-                        .alignSelf(ItemAlign.Start)
-                        .type(ButtonType.Normal)
-                        .borderRadius(3)
+                        .onClick(() => {
+                          if (this.dialogController != null) {
+                            this.dialogController.open()
+                          }
+                        })
+                        .backgroundColor(Color.Transparent)
+                        .margin({ right: 15 })
 
-                        Row() {
+                        Blank()
+                          .width(10)
+                      }
+                    }
+                    .width('90%')
+                    .height('auto')
+                    .justifyContent(FlexAlign.SpaceBetween)
+
+                    Row() {
+                      Column() {
+                        Column() {
                           Row() {
-                            Button() {
-                              Row() {
-                                Button() {
-                                  Image($r(this.likedItems.has(item) ? 'app.media.like_true' : 'app.media.like_false'))
-                                    .width(15)
-                                    .height(15)
+                            Text(this.text)
+                              .lineHeight(20)
+                              .width('85%')
+                              .fontSize(14)
+                              .maxLines(this.expandedItems.has(item) ? undefined : 5)
+                              .textOverflow({ overflow: TextOverflow.Ellipsis })
+                              .fontWeight(FontWeight.Normal)
+                              .textAlign(TextAlign.Start)
+                              .fontColor(Color.Black)
+                              .backgroundColor(Color.Transparent)
+                              .padding({ top: 5 , bottom: 10 })
+                          }
+                          .width('95%')
+
+                          if (this.text.split(/[\s\S]{1,27}/).length > 5) {
+                            Row() {
+                              Button() {
+                                  Text(this.expandedItems.has(item) ? '收起' : '展开更多')
+                                    .fontSize(14)
+                                    .fontWeight(FontWeight.Normal)
+                                    .textAlign(TextAlign.Start)
+                                    .fontColor(0x65768c)
                                     .backgroundColor(Color.White)
+                                    .padding({ bottom: 10 })
                                 }
                                 .onClick(() => {
-                                  if (this.likedItems.has(item)) {
-                                    this.likedItems.delete(item);
-                                    this.likeCounts.set(item, (this.likeCounts.get(item) || 1) - 1);
+                                  if (this.expandedItems.has(item)) {
+                                    this.expandedItems.delete(item);
                                   } else {
-                                    this.likedItems.add(item);
-                                    this.likeCounts.set(item, (this.likeCounts.get(item) || 0) + 1);
+                                    this.expandedItems.add(item);
                                   }
                                 })
-                                Blank()
-                                  .width(5)
-                                Text(`${this.likeCounts.get(item) || 0}`)
-                                  .fontSize(10)
-                                  .fontWeight(FontWeight.Normal)
-                                  .fontColor(this.likedItems.has(item) ? 0x18b998 : 0x65768c)
-                              }
                             }
-                            .stateEffect(false)
-                            .backgroundColor(Color.Transparent)
+                            .width('95%')
+                          }
+                        }
+                        .height('auto')
 
-                            Blank()
-                              .width(20)
+                        Image($r('app.media.app_icon'))
+                          .width(60)
+                          .height(60)
+                          .alignSelf(ItemAlign.Start)
 
-                            Button() {
-                              Row() {
-                                Image($r('app.media.comment'))
+                      }
+                      .margin({ left: 10, bottom: 10 })
+                    }
+
+                    Row() {
+                      Button() {
+                        Row() {
+                          Image($r('app.media.app_icon'))
+                            .width(15)
+                            .height(15)
+                            .margin({ right: 5 })
+                          Text(this.text1)
+                            .fontSize(10)
+                            .fontWeight(FontWeight.Normal)
+                            .maxLines(1)
+                            .textOverflow({ overflow: TextOverflow.Ellipsis })
+                            .fontColor(0x65768c)
+                            .width('60%')
+                        }
+                        .padding({ left: 10, right: 10 })
+                      }
+                      .height(25)
+                      .backgroundColor(0xf4f4f6)
+                      .alignSelf(ItemAlign.Start)
+                      .type(ButtonType.Normal)
+                      .borderRadius(3)
+
+                      Row() {
+                        Row() {
+                          Button() {
+                            Row() {
+                              Button() {
+                                Image($r(this.likedItems.has(item) ? 'app.media.like_true' : 'app.media.like_false'))
                                   .width(15)
                                   .height(15)
+                                  .backgroundColor(Color.White)
                               }
+                              .onClick(() => {
+                                if (this.likedItems.has(item)) {
+                                  this.likedItems.delete(item);
+                                  this.likeCounts.set(item, (this.likeCounts.get(item) || 1) - 1);
+                                } else {
+                                  this.likedItems.add(item);
+                                  this.likeCounts.set(item, (this.likeCounts.get(item) || 0) + 1);
+                                }
+                              })
+                              Blank()
+                                .width(5)
+                              Text(`${this.likeCounts.get(item) || 0}`)
+                                .fontSize(10)
+                                .fontWeight(FontWeight.Normal)
+                                .fontColor(this.likedItems.has(item) ? 0x18b998 : 0x65768c)
                             }
-                            .backgroundColor(Color.Transparent)
                           }
+                          .stateEffect(false)
+                          .backgroundColor(Color.Transparent)
 
                           Blank()
                             .width(20)
+
+                          Button() {
+                            Row() {
+                              Image($r('app.media.comment'))
+                                .width(15)
+                                .height(15)
+                            }
+                          }
+                          .backgroundColor(Color.Transparent)
                         }
+
+                        Blank()
+                          .width(20)
                       }
-                      .justifyContent(FlexAlign.SpaceBetween)
-                      .width('90%')
-                      .padding({ right: 10 })
-                      .margin({ bottom: 10 })
                     }
+                    .justifyContent(FlexAlign.SpaceBetween)
+                    .width('90%')
+                    .padding({ right: 10 })
+                    .margin({ bottom: 10 })
                   }
-                  .margin({ top: 10, left: 10 })
                 }
-                .backgroundColor(Color.White)
-                .width('100%')
-                .height('auto')
-                .borderRadius(10)*/
-                DynamicListItem({
-                  // dialogController: this.dialogController,
-                  item: item
-                  // expandedItems: $expandedItems,
-                })
+                .margin({ top: 10, left: 10 })
               }
-            }, (item: string, index: number) => {
-              console.log("index" + index)
-              return item
-            })
-          }
-          .padding({ top: 5, bottom: 200 })
-          .listDirection(Axis.Vertical) // 排列方向
-          .scrollBar(BarState.Off)
-          .friction(0.6)
-          .cachedCount(3)
-          .divider({
-            strokeWidth: 2,
-            color: 0xf5f6f8,
-            startMargin: 10,
-            endMargin: 10
-          }) // 每行之间的分界线
-          .edgeEffect(EdgeEffect.Spring) // 边缘效果设置为Spring
-          .backgroundColor(Color.White)
-          .width('100%')
-          // .height('auto')
+              .backgroundColor(Color.White)
+              .width('100%')
+              .height('auto')
+              .borderRadius(10)*/
+              DynamicListItem({
+                // dialogController: this.dialogController,
+                item: item,
+                openDialog: () => {
+                  this.index = index
+                  if (this.dialogController != null) {
+                    this.dialogController.open()
+                  }
+                },
+                // expandedItems: $expandedItems,
+              })
+            }
+          }, (item: string, index: number) => {
+            console.log("index" + index)
+            return item
+          })
         }
+        .padding({ top: 5 })
+        .listDirection(Axis.Vertical) // 排列方向
+        .scrollBar(BarState.Off)
+        .friction(0.6)
+        .cachedCount(3)
+        .divider({
+          strokeWidth: 2,
+          color: 0xf5f6f8,
+          startMargin: 10,
+          endMargin: 10
+        }) // 每行之间的分界线
+        .edgeEffect(EdgeEffect.Spring) // 边缘效果设置为Spring
+        .backgroundColor(Color.White)
+        .width('100%')
+        .height('auto')
       }
       .height('100%')
+      .padding({
+        top: this.statusBarHeight
+      })
     }
     .hideTitleBar(true)
-    .ignoreLayoutSafeArea()
+    .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+    .navDestination(this.routerMap)
   }
 }
 
 
 @CustomDialog
 struct CustomDialogExample {
-  private text1 : string = '';
-
+  private text1: string = '';
   controller?: CustomDialogController
   cancel: () => void = () => {
   }
   confirm: () => void = () => {
   }
+
   build() {
     Column() {
 
@@ -441,13 +464,13 @@ struct CustomDialogExample {
         })
         .margin(15)
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_like'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -470,13 +493,13 @@ struct CustomDialogExample {
       .width('90%')
       .height(45)
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_share'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -500,13 +523,13 @@ struct CustomDialogExample {
       .height(45)
       .margin({ top: 10 })
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_unlike'))
             .width(15)
             .height(15)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()
@@ -531,13 +554,13 @@ struct CustomDialogExample {
       .height(45)
       .margin({ top: 10 })
 
-      Button(){
+      Button() {
         Row() {
           Image($r('app.media.CD_report'))
             .width(17)
             .height(17)
             .align(Alignment.End)
-            .margin({ left:15 })
+            .margin({ left: 15 })
             .onClick(() => {
               if (this.controller != undefined) {
                 this.controller.close()

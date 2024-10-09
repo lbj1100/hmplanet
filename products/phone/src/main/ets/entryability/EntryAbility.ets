@@ -19,7 +19,9 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    windowStage.loadContent('pages/MainPage', (err) => {
+    // let pageName = 'pages/MainPage';
+    let pageName = 'pages/FirstPage';
+    windowStage.loadContent(pageName, (err) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
@@ -27,7 +29,7 @@ export default class EntryAbility extends UIAbility {
       let windowClass: window.Window = windowStage.getMainWindowSync(); // 获取应用主窗口
 
       // 2.实现沉浸式效果。方式一：设置导航栏、状态栏不显示。
-      let names: Array<'status' | 'navigation'> = ['status'];
+      /*let names: Array<'status' | 'navigation'> = ['status'];
       windowClass.setWindowSystemBarEnable(names, (err: BusinessError) => {
         let errCode: number = err.code;
         if (errCode) {
@@ -35,18 +37,18 @@ export default class EntryAbility extends UIAbility {
           return;
         }
         console.info('Succeeded in setting the system bar to be visible.');
-      });
+      });*/
 
 
       // 1. 设置窗口全屏
-      let isLayoutFullScreen = true;
+      /*let isLayoutFullScreen = true;
       windowClass.setWindowLayoutFullScreen(isLayoutFullScreen)
         .then(() => {
           console.info('Succeeded in setting the window layout to full-screen mode.');
         })
         .catch((err: BusinessError) => {
           console.error('Failed to set the window layout to full-screen mode. Cause:' + JSON.stringify(err));
-        });
+        });*/
 
       // 2. 获取布局避让遮挡的区域
       let type = window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR; // 以导航条避让为例

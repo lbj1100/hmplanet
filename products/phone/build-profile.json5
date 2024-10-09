@@ -6,7 +6,8 @@
         "sources": [],
         "packages": [
           "@ohos/planet",
-          "@ohos/dynamic"
+          "@ohos/dynamic",
+          "@ohos/me"
         ]
       }
     }

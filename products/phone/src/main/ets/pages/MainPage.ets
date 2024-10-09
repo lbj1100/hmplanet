@@ -1,11 +1,7 @@
-import {
-  StyleConstants,
-  BreakpointConstants,
-  BreakpointSystem
-} from '@ohos/common';
+import { StyleConstants, BreakpointConstants, BreakpointSystem } from '@ohos/common';
 import { PageConstants } from '../constants/PageConstants';
 import { TabButtonInfoModel, tabButtonInfo } from '../viewmodel/MainPageData';
-import { PlanetPage } from  '@ohos/planet';
+import { PlanetPage } from '@ohos/planet';
 import '@ohos/planet';
 import { Dynamic } from '@ohos/dynamic';
 import { MePage } from '@ohos/me';
@@ -17,14 +13,16 @@ struct MainPage {
   // @State msg:string = "home"
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm';
   @StorageLink('Index  Page') currentPageIndex: number = 0;
-  @Provide appPathStack: NavPathStack = new NavPathStack();
-  @Provide planetPathStack: NavPathStack = new NavPathStack();
-  @Provide dynamicPathStack: NavPathStack = new NavPathStack();
+  // 路由栈
+  @Provide('appPathStack') appPathStack: NavPathStack = new NavPathStack();
+  @Provide('planetPathStack') planetPathStack: NavPathStack = new NavPathStack();
+  @Provide('dynamicPathStack') dynamicPathStack: NavPathStack = new NavPathStack();
+  @Provide('mePathStack') mePathStack: NavPathStack = new NavPathStack();
+
   bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
   statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
-
-
   private breakpointSystem = new BreakpointSystem();
+
   aboutToAppear(): void {
     this.breakpointSystem.register();
     if (!this.appPathStack) {
@@ -43,11 +41,11 @@ struct MainPage {
     RouterModule.getBuilder(builderName).builder(param);
   };
 
-
   build() {
     Navigation(this.appPathStack) {
       Column() {
         Tabs({
+          // 打断点判断当前屏幕尺寸，设置导航条位置
           barPosition: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? BarPosition.Start :
           BarPosition.End,
           index: this.currentPageIndex
@@ -58,15 +56,12 @@ struct MainPage {
           .tabBar(this.BottomNavigation(tabButtonInfo[PageConstants.HOME_INDEX]))
 
           TabContent() {
-            // Text("NewProduct")
             Dynamic()
           }
           .tabBar(this.BottomNavigation(tabButtonInfo[PageConstants.NEW_PRODUCT_INDEX]))
 
           TabContent() {
-            // Text("ShopCart")
             MePage()
-            // Text(this.currentBreakpoint)
           }
           .tabBar(this.BottomNavigation(tabButtonInfo[PageConstants.SHOP_CART_INDEX]))
 
@@ -93,15 +88,28 @@ struct MainPage {
     }
     .backgroundColor($r('app.color.page_background'))
     .height('100%')
-    .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+    // .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
     .padding({
-      top: this.statusBarHeight,
+      // top: this.statusBarHeight,
       // bottom: this.bottomRectHeight
     }) // 此处margin具体数值在实际中应与导航条区域高度保持一致
     .hideTitleBar(true)
     .navDestination(this.routerMap)
+    .mode(NavigationMode.Auto)
+    .navBarWidth('50%')
+    .navBarWidthRange(['30%', '70%'])
+    // TODO 以下属性暂时不支持，有bug？
+    // .minContentWidth('40%')
+
+    .onNavigationModeChange((mode: NavigationMode) => {
+      console.log('mode', mode);
+    })
+
+
   }
-  @Builder TitleNavigation() {
+
+  @Builder
+  TitleNavigation() {
     Row() {
       Text('知识星球')
         .fontSize(20)
@@ -114,8 +122,8 @@ struct MainPage {
     .justifyContent(FlexAlign.Center)
   }
 
-
-  @Builder BottomNavigation(button: TabButtonInfoModel) {
+  @Builder
+  BottomNavigation(button: TabButtonInfoModel) {
     Column({ space: PageConstants.BUTTON_SPACE }) {
       Image(this.currentPageIndex === button.index ? button.selectImg : button.img)
         .objectFit(ImageFit.Contain)

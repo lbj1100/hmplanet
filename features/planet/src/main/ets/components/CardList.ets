@@ -1,4 +1,4 @@
-import { StyleConstants, CommonDataSource } from '@ohos/common';
+import { StyleConstants, CommonDataSource, BreakpointConstants } from '@ohos/common';
 import { Planet } from '@ohos/common';
 import { EmptyComponent } from './EmptyComponent';
 import { resourceManager } from '@kit.LocalizationKit';
@@ -9,6 +9,7 @@ import { resourceManager } from '@kit.LocalizationKit';
 
 @Component
 export struct CardList {
+  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm';
   @Link cardList: Planet[];
   @Prop column: number = 0;
   private onClickItem? = (card: Planet) => {
@@ -110,7 +111,7 @@ export struct CardList {
       }
       .enableScrollInteraction(false)
       .cachedCount(6)
-      .height(this.listLength)
+      .height(Math.ceil(this.cardList.length / (this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? 2 : 3)) * (210 + 10))
       .width(StyleConstants.FULL_WIDTH)
       .margin({
         left: $r('app.float.card_list_margin'),

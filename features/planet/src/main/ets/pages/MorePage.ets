@@ -20,10 +20,9 @@ export struct MorePage {
 
   aboutToAppear(): void {
     // this.title = router.getParams() ? (router.getParams() as Record<string, string>)['title'] : 'More Page';
-    // console.log('lbj!!!' + (router.getParams() as Map<string, string>).get('params'))
+    // TODO 网络请求
     this.typeList = ['全部', '个人成长', '3', '4', '5', '6', '7', '8', '9', '10'];
     this.planetList = cardData;
-    // TODO 网络请求
   }
 
   build() {
@@ -131,7 +130,6 @@ export struct MorePage {
           .alignListItem(ListItemAlign.Center)
           .scrollBar(BarState.Off)
         }
-
         // .alignRules({
         //   top: { anchor: 'type', align: VerticalAlign.Bottom }
         // })
@@ -140,11 +138,12 @@ export struct MorePage {
       .backgroundColor($r('app.color.more_page_bg'))
       .padding({
         top: this.statusBarHeight,
-        bottom: this.bottomRectHeight,
+        // bottom: this.bottomRectHeight,
         left: $r('app.float.vp_eight'),
         right: $r('app.float.vp_eight')
       }) // 此处margin具体数值在实际中应与导航条区域高度保持一致
     }
+    .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
     .hideTitleBar(true)
     .onReady((ndc: NavDestinationContext) => {
       this.title = (ndc.pathInfo.param as Record<string, string>)['title'];

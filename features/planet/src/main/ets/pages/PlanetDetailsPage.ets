@@ -1,18 +1,17 @@
 import { CommonDataSource, dynamicData,
   DynamicListItem,
   DynamicModel, StyleConstants, TabsComponent } from '@ohos/common';
-import { router } from '@kit.ArkUI';
 import { Planet } from '@ohos/common';
 import { PullToRefresh, PullToRefreshConfigurator } from '@ohos/pulltorefresh';
 import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/routermodule';
 
 
-// @Entry({ routeName: 'PlanetDetailsPage' })
 @Component
-/*export*/ struct PlanetDetailsPage {
+struct PlanetDetailsPage {
 
   bottomRectHeight: string = AppStorage.get<number>('bottomRectHeight') + 'px';
   statusBarHeight: string = AppStorage.get<number>('statusBarHeight') + 'px';
+  param: Planet | null = null;
   // 路由栈
   // @Consume appPathStack: NavPathStack;
   // @Consume planetPathStack: NavPathStack;
@@ -76,8 +75,9 @@ import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/r
     });
 
     // TODO 性能？
-    let params = router.getParams() as Record<string, object>;
-    this.planetInfo = params != null ? params.planet as Planet : this.planetInfo;
+    // let params = router.getParams() as Record<string, object>;
+    // let params =
+    // this.planetInfo = params != null ? params.planet as Planet : this.planetInfo;
     // this.planetId = params.id as string;
     console.log('planetInfo:', this.planetInfo);
     // this.info = this.localDataManager.queryCommodityListById(this.commodityId);
@@ -105,10 +105,6 @@ import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/r
     .scrollBar(BarState.Off)
   }
 
-
-
-
-
   build() {
     NavDestination() {
       Flex({ direction: FlexDirection.Column }) {
@@ -130,6 +126,7 @@ import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/r
             if (this.isScrollEnd) {
               Text(this.planetInfo?.title)
                 .fontSize(20)
+                // TODO 宽度
                 .width(this.cw - 20 - 20 - 70 - 20 - 20 - 20 - 5)
                 .fontColor(Color.White)
                 .maxLines(1)
@@ -239,9 +236,7 @@ import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/r
                       .borderRadius(10)
                       .backgroundColor(Color.White)
                       .borderWidth(1)
-                      .borderColor(Color.White)// .margin({
-                        //   left: -3
-                        // })
+                      .borderColor(Color.White)
                       .position({
                         x: 26
                       })
@@ -540,7 +535,11 @@ import { BuilderNameConstants, RouterModule, RouterNameConstants } from '@ohos/r
       .backgroundBlurStyle(BlurStyle.Thin)
     }
     .hideTitleBar(true)
-    // .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+    .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+    .onReady((ndc: NavDestinationContext) => {
+      let planetInfo = (ndc.pathInfo.param as Record<string, Planet>)['planet'];
+      this.planetInfo = planetInfo ? planetInfo : this.planetInfo;
+    })
     // .systemBarStyle({
     //   statusBarContentColor: "#000000"
     // })
@@ -696,8 +695,9 @@ struct CustomDialogExample {
 @Builder function harBuilder(value: object) {
   PlanetDetailsPage()
 }
-
+// 注册构建器
 const builderName = BuilderNameConstants.HARPLANET_DETAILS;
+// 如果没有注册过，则注册
 if (!RouterModule.getBuilder(builderName)) {
   let builder: WrappedBuilder<[object]> = wrapBuilder(harBuilder);
   RouterModule.registerBuilder(builderName, builder);

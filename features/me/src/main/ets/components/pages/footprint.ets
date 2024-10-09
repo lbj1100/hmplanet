@@ -1,7 +1,9 @@
-import { router } from '@kit.ArkUI'
+// import { router } from '@kit.ArkUI'
+import { BuilderNameConstants, buildRouterModel, RouterModule, RouterNameConstants } from '@ohos/routermodule';
 
 @Entry({ routeName:'footprint' })
 @Component
+// 个人中心足迹页面
 export struct Footprint {
   private arr1: number[] = [1, 2, 3, 4];
   private arr2: number[] = [];
@@ -106,9 +108,10 @@ export struct Footprint {
             .height(17)
             .align(Alignment.Start)
             .onClick(() => {
-              router.replaceNamedRoute({
-                name: 'MainPage'
-              })
+              RouterModule.pop(RouterNameConstants.ME_HAR)
+              // router.replaceNamedRoute({
+              //   name: 'MainPage'
+              // })
             })
 
           Row() {
@@ -748,4 +751,19 @@ struct TextCustomDialog {
         });
     }
   }
+}
+
+@Builder function harBuilder(value: object) {
+  NavDestination() {
+    Footprint()
+  }
+  .hideTitleBar(true)
+  .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
+}
+// 注册构建器
+const builderName = BuilderNameConstants.HARME_FOOTPRINT;
+// 如果没有注册过，则注册
+if (!RouterModule.getBuilder(builderName)) {
+  let builder: WrappedBuilder<[object]> = wrapBuilder(harBuilder);
+  RouterModule.registerBuilder(builderName, builder);
 }

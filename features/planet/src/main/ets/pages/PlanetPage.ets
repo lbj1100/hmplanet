@@ -13,25 +13,18 @@ import { RouterModule, buildRouterModel, RouterNameConstants, BuilderNameConstan
 
 let touch = 0;
 
-// @Entry({ routeName: 'PlanetPage' })
 @Component
 export struct PlanetPage {
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm';
 
   @Consume planetPathStack: NavPathStack;
+  @Consume appPathStack: NavPathStack;
   private onClickItem = (Card: Planet) => {
+    // 在另一栏窗口打开
     buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARPLANET_DETAILS, new Object({
       id: Card.id,
       planet: Card
     }));
-    // router.pushNamedRoute({
-    //   name: 'PlanetDetailsPage',
-    //   params: {
-    //     id: Card.id,
-    //     planet: Card
-    //   }
-    // });
-
   };
   @State cardList: Planet[] = [];
   @State refresher: RefreshModel = new RefreshModel();
@@ -139,32 +132,14 @@ export struct PlanetPage {
   aboutToAppear(): void {
     // this.networkRequest();
     this.changeCategory();
-    // this.dynamicLoading();
     console.log('aboutToAppear')
+    // TODO 动态获取数据（用户）
     this.cardList = cardData
     if (!this.planetPathStack) {
       this.planetPathStack = new NavPathStack();
     }
     RouterModule.createRouter(RouterNameConstants.PLANET_HAR, this.planetPathStack);
   }
-
-  // @Builder
-  // CardItem(card: CardInfoModel) {
-  //   Column() {
-  //     Image(card.img)
-  //       .width('100vp')
-  //       .height('100vp')
-  //     Text(card.title)
-  //       .fontSize(20)
-  //       .fontColor('#000000')
-  //     Text(card.author)
-  //       .fontSize(16)
-  //       .fontColor('#000000')
-  //   }
-  //   .backgroundColor('#ffffff')
-  //   // 圆角
-  //   .borderRadius(6)
-  // }
 
 
   @Builder
@@ -174,6 +149,20 @@ export struct PlanetPage {
   };
 
   build() {
+    /**
+     * TO NOTE: 页面导航
+     * 为什么是planetPathStack
+     * 在这里使用planetPathStack push 页面是在tabs里面跳转的，就是说tabs下导航栏还在
+     *
+     *
+     * 在双栏模式中
+     * 如果使用appPathStack push 页面，会在另一栏窗口打开，这样就不是在tabs里面跳转了
+     * 如果使用planetPathStack push 页面，会在同一栏窗口打开，这样就只在tabs里面跳转了
+     *
+     * 所以这里使用appPS push 详情页，使用planetPS push 搜索页
+     * 详情页在另一栏窗口打开，即右侧窗口
+     * 搜索页在同一栏窗口打开（覆盖PlanetPage），即左侧窗口
+     */
     Navigation(this.planetPathStack) {
       Flex({ direction: FlexDirection.Column }) {
         Stack() {
@@ -192,10 +181,6 @@ export struct PlanetPage {
               .fontSize(20)
               .fontColor('#000000')
               .fontWeight(FontWeight.Bold)
-            // .padding({
-            //   top: $r('app.float.vp_twelve'),
-            //   bottom: $r('app.float.vp_twelve')
-            // })
           }
           .backgroundColor('#ffffff')
           .height(50)
@@ -215,16 +200,16 @@ export struct PlanetPage {
                 bottom: $r('app.float.vp_eight')
               })
               .onClick(() => {
-                buildRouterModel(RouterNameConstants.PHONE_HAP, BuilderNameConstants.HARPLANET_SEARCH);
-                // router.pushNamedRoute({
-                //   name: 'SearchPage'
-                // })
+                // 在同一栏窗口打开
+                buildRouterModel(RouterNameConstants.PLANET_HAR, BuilderNameConstants.HARPLANET_SEARCH);
               })
             CardList({
               cardList: $cardList,
+              // 判断当前屏幕尺寸，设置每行显示的个数
               column: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? StyleConstants.DISPLAY_FOUR :
                 (this.currentBreakpoint === BreakpointConstants.BREAKPOINT_MD ?
                 StyleConstants.DISPLAY_THREE : StyleConstants.DISPLAY_TWO),
+              // column: StyleConstants.DISPLAY_TWO,
               onClickItem: (data: Planet): void => this.onClickItem(data)
             })
               .zIndex(-1)
@@ -245,11 +230,9 @@ export struct PlanetPage {
           bottom: $r('app.float.vp_twelve')
         })
         .onWillScroll(() => {
-          // console.log('willScroll');
           this.isScrollEdge = false;
         })
         .onReachStart(() => {
-          // console.log('reachStart');
           this.isScrollEdge = true;
         })
       }
@@ -257,7 +240,6 @@ export struct PlanetPage {
       .width('100%')
       .height('100%')
       .onTouch((event: TouchEvent | undefined) => {
-        // console.log('touch');
         if (!this.isScrollEdge) {
           return;
         }
@@ -265,7 +247,6 @@ export struct PlanetPage {
         this.handleTouch(event);
         if (event) {
           // console.log('event' + event.type);
-
         }
       })
       .onAreaChange((oldValue: Area, newValue: Area) => {

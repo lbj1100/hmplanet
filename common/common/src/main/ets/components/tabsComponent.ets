@@ -14,7 +14,7 @@ export struct TabsComponent {
       List() {
         ForEach(this.tabsList, (item: string, index: number) => {
           ListItem() {
-            TabsItemComponent({ item: item, index: index, currentIndex: this.tabsIndex, itemClick: this.itemClick })
+            TabsItem({ item: item, index: index, currentIndex: this.tabsIndex, itemClick: this.itemClick })
             /*Text(item)
               .fontColor(this.tabsIndex === index ? $r('app.color.tab_page_item_focus_font') : $r('app.color.tab_page_item_font'))
               .fontSize(this.getFontSize())
@@ -67,7 +67,7 @@ export struct TabsComponent {
 }
 
 @Component
-struct TabsItemComponent {
+struct TabsItem {
   @Prop item: string;
   @Prop index: number; // 列表项的下标
   @Link @Watch('onCurrentIndexUpdate') currentIndex: number;
@@ -75,6 +75,14 @@ struct TabsItemComponent {
   @State bgColor: ResourceColor = this.currentIndex === this.index ? "#18b797" : "#dddddd";// ? "#18b797" : "#dddddd";// ? $r('app.color.tab_page_item_focus_bg') :$r('app.color.tab_page_item_bg');
   private itemClick: (index: number) => void = (index: number) => {};
 
+  /**
+   * TO NOTE: 状态变化监听优化
+   * 该方法会在currentIndex变化时被调用
+   * 用于更新当前列表项的样式
+   *
+   * 如果直接在build方法中使用currentIndex，会导致currentIndex变化时，所有列表项的样式都会被重新构建
+   * 为了避免这种情况，可以通过监听currentIndex的变化，来动态修改当前列表项的样式
+   */
   onCurrentIndexUpdate() {
     // 根据当前列表项下标index与currentIndex的差值来动态修改color的值
     this.fontColor = this.currentIndex === this.index ? Color.White : Color.Black;// ? $r('app.color.tab_page_item_focus_font') : $r('app.color.tab_page_item_font');

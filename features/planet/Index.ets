@@ -2,6 +2,16 @@ import { BuilderNameConstants } from '@ohos/routermodule';
 
 export { PlanetPage } from './src/main/ets/pages/PlanetPage'
 
+
+
+/**
+ * TO NOTE: 动态引入页面
+ *
+ * @param builderName 页面名
+ *
+ * 1. 获取页面名
+ * 2. 动态引入页面
+ */
 export function harInit(builderName: string): void {
   // 动态引入要跳转的页面
   switch (builderName) {

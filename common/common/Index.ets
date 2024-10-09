@@ -7,5 +7,5 @@ export { RefreshModel, listTouchEvent } from './src/main/ets/components/PullDown
 export { CommonConstant, PageState } from './src/main/ets/components/CommonConstant';
 export { DynamicListItem } from './src/main/ets/components/DynamicListItem';
 export { Planet } from  './src/main/ets/model/PlanetModel';
-export { TabsComponent } from './src/main/ets/view/tabsComponent';
+export { TabsComponent } from './src/main/ets/components/tabsComponent';
 export { DynamicModel, dynamicData } from  './src/main/ets/model/DynamicModel';
